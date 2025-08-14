@@ -18,7 +18,6 @@ interface LoadData {
   rtg: number;
   shorePower: number;
   reefers: number;
-  batteryCharge: number;
   total: number;
 }
 
@@ -30,32 +29,32 @@ interface TooltipData {
 }
 
 const LoadProfileChart: React.FC = () => {
-  // Sample load data for 24 hours
+  // Sample load data for 24 hours (35-52 MW range)
   const loadData: LoadData[] = [
-    { hour: 1, sts: 5, tt: 8, rtg: 6, shorePower: 0, reefers: 2, batteryCharge: 3, total: 24 },
-    { hour: 2, sts: 4, tt: 6, rtg: 5, shorePower: 0, reefers: 2, batteryCharge: 2, total: 19 },
-    { hour: 3, sts: 3, tt: 4, rtg: 4, shorePower: 0, reefers: 2, batteryCharge: 1, total: 14 },
-    { hour: 4, sts: 3, tt: 4, rtg: 4, shorePower: 0, reefers: 2, batteryCharge: 1, total: 14 },
-    { hour: 5, sts: 4, tt: 6, rtg: 5, shorePower: 0, reefers: 2, batteryCharge: 2, total: 19 },
-    { hour: 6, sts: 6, tt: 10, rtg: 8, shorePower: 5, reefers: 2, batteryCharge: 4, total: 35 },
-    { hour: 7, sts: 8, tt: 12, rtg: 10, shorePower: 8, reefers: 2, batteryCharge: 5, total: 45 },
-    { hour: 8, sts: 10, tt: 15, rtg: 12, shorePower: 10, reefers: 2, batteryCharge: 6, total: 55 },
-    { hour: 9, sts: 12, tt: 18, rtg: 14, shorePower: 10, reefers: 2, batteryCharge: 7, total: 63 },
-    { hour: 10, sts: 15, tt: 20, rtg: 16, shorePower: 12, reefers: 2, batteryCharge: 8, total: 73 },
-    { hour: 11, sts: 18, tt: 22, rtg: 18, shorePower: 15, reefers: 2, batteryCharge: 9, total: 84 },
-    { hour: 12, sts: 20, tt: 25, rtg: 20, shorePower: 15, reefers: 2, batteryCharge: 10, total: 92 },
-    { hour: 13, sts: 18, tt: 22, rtg: 18, shorePower: 12, reefers: 2, batteryCharge: 8, total: 80 },
-    { hour: 14, sts: 16, tt: 20, rtg: 16, shorePower: 10, reefers: 2, batteryCharge: 7, total: 71 },
-    { hour: 15, sts: 14, tt: 18, rtg: 14, shorePower: 8, reefers: 2, batteryCharge: 6, total: 62 },
-    { hour: 16, sts: 12, tt: 15, rtg: 12, shorePower: 5, reefers: 2, batteryCharge: 5, total: 51 },
-    { hour: 17, sts: 10, tt: 12, rtg: 10, shorePower: 8, reefers: 2, batteryCharge: 4, total: 46 },
-    { hour: 18, sts: 8, tt: 10, rtg: 8, shorePower: 10, reefers: 2, batteryCharge: 3, total: 41 },
-    { hour: 19, sts: 6, tt: 8, rtg: 6, shorePower: 5, reefers: 2, batteryCharge: 2, total: 29 },
-    { hour: 20, sts: 5, tt: 6, rtg: 5, shorePower: 0, reefers: 2, batteryCharge: 2, total: 20 },
-    { hour: 21, sts: 4, tt: 5, rtg: 4, shorePower: 0, reefers: 2, batteryCharge: 1, total: 16 },
-    { hour: 22, sts: 4, tt: 5, rtg: 4, shorePower: 0, reefers: 2, batteryCharge: 1, total: 16 },
-    { hour: 23, sts: 5, tt: 6, rtg: 5, shorePower: 0, reefers: 2, batteryCharge: 2, total: 20 },
-    { hour: 24, sts: 5, tt: 8, rtg: 6, shorePower: 0, reefers: 2, batteryCharge: 3, total: 24 },
+    { hour: 1, sts: 10, tt: 12, rtg: 8, shorePower: 0, reefers: 5, total: 35 },
+    { hour: 2, sts: 9, tt: 10, rtg: 7, shorePower: 0, reefers: 5, total: 36 },
+    { hour: 3, sts: 8, tt: 9, rtg: 6, shorePower: 0, reefers: 5, total: 37 },
+    { hour: 4, sts: 8, tt: 9, rtg: 6, shorePower: 0, reefers: 5, total: 38 },
+    { hour: 5, sts: 9, tt: 10, rtg: 7, shorePower: 2, reefers: 5, total: 40 },
+    { hour: 6, sts: 11, tt: 14, rtg: 10, shorePower: 8, reefers: 5, total: 45 },
+    { hour: 7, sts: 13, tt: 16, rtg: 12, shorePower: 10, reefers: 5, total: 48 },
+    { hour: 8, sts: 15, tt: 18, rtg: 14, shorePower: 12, reefers: 5, total: 52 },
+    { hour: 9, sts: 16, tt: 19, rtg: 15, shorePower: 12, reefers: 5, total: 51 },
+    { hour: 10, sts: 17, tt: 20, rtg: 16, shorePower: 14, reefers: 5, total: 50 },
+    { hour: 11, sts: 18, tt: 21, rtg: 17, shorePower: 15, reefers: 5, total: 49 },
+    { hour: 12, sts: 19, tt: 22, rtg: 18, shorePower: 15, reefers: 5, total: 52 },
+    { hour: 13, sts: 17, tt: 20, rtg: 16, shorePower: 13, reefers: 5, total: 48 },
+    { hour: 14, sts: 15, tt: 18, rtg: 14, shorePower: 11, reefers: 5, total: 46 },
+    { hour: 15, sts: 13, tt: 16, rtg: 12, shorePower: 9, reefers: 5, total: 43 },
+    { hour: 16, sts: 11, tt: 14, rtg: 10, shorePower: 7, reefers: 5, total: 41 },
+    { hour: 17, sts: 10, tt: 12, rtg: 9, shorePower: 8, reefers: 5, total: 40 },
+    { hour: 18, sts: 12, tt: 14, rtg: 11, shorePower: 10, reefers: 5, total: 44 },
+    { hour: 19, sts: 10, tt: 12, rtg: 9, shorePower: 6, reefers: 5, total: 38 },
+    { hour: 20, sts: 9, tt: 10, rtg: 8, shorePower: 3, reefers: 5, total: 35 },
+    { hour: 21, sts: 8, tt: 9, rtg: 7, shorePower: 0, reefers: 5, total: 36 },
+    { hour: 22, sts: 8, tt: 9, rtg: 7, shorePower: 0, reefers: 5, total: 37 },
+    { hour: 23, sts: 9, tt: 10, rtg: 8, shorePower: 0, reefers: 5, total: 38 },
+    { hour: 24, sts: 10, tt: 12, rtg: 9, shorePower: 0, reefers: 5, total: 39 },
   ];
 
   const gridCapacity = 45; // MW
@@ -68,7 +67,6 @@ const LoadProfileChart: React.FC = () => {
     rtg: '#000850',        // navy blue
     shorePower: '#C6F069', // bright green
     reefers: '#EBEBEB',    // grey
-    batteryCharge: '#FF69B4' // pink
   };
 
   const equipmentLabels = {
@@ -77,7 +75,6 @@ const LoadProfileChart: React.FC = () => {
     rtg: 'Rubber-Tired Gantry (RTG)',
     shorePower: 'Shore Power',
     reefers: 'Reefer Containers',
-    batteryCharge: 'Battery Charging'
   };
 
   const CustomTooltip = ({ active, payload, label }: any) => {
@@ -185,14 +182,6 @@ const LoadProfileChart: React.FC = () => {
               stroke={equipmentColors.reefers} 
               fill={equipmentColors.reefers}
               name={equipmentLabels.reefers}
-            />
-            <Area 
-              type="monotone" 
-              dataKey="batteryCharge" 
-              stackId="1"
-              stroke={equipmentColors.batteryCharge} 
-              fill={equipmentColors.batteryCharge}
-              name={equipmentLabels.batteryCharge}
             />
           </AreaChart>
         </ResponsiveContainer>
