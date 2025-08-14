@@ -122,7 +122,7 @@ const LoadProfileChart: React.FC = () => {
               stroke="#666"
               fontSize={12}
               tickLine={false}
-              domain={[0, yAxisMax]}
+              domain={[0, 70]}
               label={{ value: 'Load (MW)', angle: -90, position: 'insideLeft' }}
             />
             <Tooltip content={<CustomTooltip />} />
