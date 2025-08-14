@@ -116,7 +116,7 @@ export default function ZepaExplorer() {
               <h1 className="text-3xl font-bold">Load Profile Scenario Explorer</h1>
             </div>
             <p className="text-xl mb-4 opacity-90">
-              Accelerating port decarbonization by making battery-electric container handling equipment (BE-CHE) affordable and accessible this decade.
+              ZEPA is an industry-wide strategic alliance, dedicated to accelerate adoption of battery-electric container handling equipment
             </p>
             <p className="text-lg opacity-80 max-w-4xl">
               The ZEPA Explorer is a configurable tool to help port stakeholders assess BE-CHE loads, grid feasibility, and electrification strategies.
