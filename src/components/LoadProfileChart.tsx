@@ -18,7 +18,6 @@ interface LoadData {
   rtg: number;
   shorePower: number;
   reefers: number;
-  total: number;
 }
 
 interface TooltipData {
@@ -58,7 +57,7 @@ const LoadProfileChart: React.FC = () => {
   ];
 
   const gridCapacity = 60; // MW
-  const maxLoad = Math.max(...loadData.map(d => d.total));
+  const maxLoad = Math.max(...loadData.map(d => d.sts + d.tt + d.rtg + d.shorePower + d.reefers));
   const yAxisMax = Math.max(gridCapacity * 0.8, maxLoad * 0.9); // Set max below grid capacity
 
   const equipmentColors = {
