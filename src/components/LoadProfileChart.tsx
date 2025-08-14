@@ -57,7 +57,7 @@ const LoadProfileChart: React.FC = () => {
     { hour: 24, sts: 10, tt: 12, rtg: 9, shorePower: 0, reefers: 5, total: 39 },
   ];
 
-  const gridCapacity = 45; // MW
+  const gridCapacity = 60; // MW
   const maxLoad = Math.max(...loadData.map(d => d.total));
   const yAxisMax = Math.max(gridCapacity * 0.8, maxLoad * 0.9); // Set max below grid capacity
 
