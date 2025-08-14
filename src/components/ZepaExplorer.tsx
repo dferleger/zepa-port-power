@@ -119,32 +119,11 @@ export default function ZepaExplorer() {
               Accelerating port decarbonization by making battery-electric container handling equipment (BE-CHE) affordable and accessible this decade.
             </p>
             <p className="text-lg opacity-80 max-w-4xl">
-              The ZEPA Explorer is a configurable tool to help port stakeholders assess BE-CHE loads, grid feasibility, and electrification strategies.
+              The Explorer is a configurable tool to help port stakeholders assess BE-CHE loads, grid feasibility, and charging strategies.
             </p>
           </div>
         </header>
-
-        {/* Disclaimer Banner */}
-        <div className="bg-amber-50 border-l-4 border-amber-400 border-b border-amber-200 dark:bg-amber-950 dark:border-amber-800">
-          <div className="container mx-auto px-6 py-4 max-w-6xl">
-            <div className="flex items-center gap-3">
-              <div className="flex-shrink-0">
-                <div className="w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center">
-                  <span className="text-amber-900 text-sm font-bold">!</span>
-                </div>
-              </div>
-              <div>
-                <h3 className="text-amber-800 dark:text-amber-200 font-semibold text-sm">
-                  Demo Tool - For Demonstration Purposes Only
-                </h3>
-                <p className="text-amber-700 dark:text-amber-300 text-sm mt-1">
-                  This explorer is a mock-up of a hypothetical tool designed to help users understand the look and feel of the interface. The functionality is intended for demonstration purposes and is not a fully operational calculation tool.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
+    
         <div className="container mx-auto px-6 py-8 max-w-6xl space-y-8">
           
           {/* Section 1: Terminal Set-up */}
