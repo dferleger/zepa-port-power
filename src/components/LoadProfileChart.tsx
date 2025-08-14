@@ -12,7 +12,7 @@ import {
 } from 'recharts';
 
 interface LoadData {
-  hour: number;
+  time: string;
   sts: number;
   tt: number;
   rtg: number;
@@ -23,38 +23,65 @@ interface LoadData {
 interface TooltipData {
   equipment: string;
   value: number;
-  hour: number;
+  time: string;
   color: string;
 }
 
 const LoadProfileChart: React.FC = () => {
-  // Sample load data for 24 hours (35-52 MW range)
-  const loadData: LoadData[] = [
-    { hour: 1, sts: 10, tt: 12, rtg: 8, shorePower: 5, reefers: 5},
-    { hour: 2, sts: 9, tt: 10, rtg: 7, shorePower: 5, reefers: 5 },
-    { hour: 3, sts: 8, tt: 9, rtg: 6, shorePower: 5, reefers: 5 },
-    { hour: 4, sts: 8, tt: 9, rtg: 6, shorePower: 5, reefers: 5 },
-    { hour: 5, sts: 9, tt: 10, rtg: 7, shorePower: 5, reefers: 5 },
-    { hour: 6, sts: 11, tt: 14, rtg: 10, shorePower: 8, reefers: 5 },
-    { hour: 7, sts: 13, tt: 16, rtg: 12, shorePower: 8, reefers: 5 },
-    { hour: 8, sts: 12, tt: 15, rtg: 11, shorePower: 8, reefers: 5},
-    { hour: 9, sts: 13, tt: 16, rtg: 12, shorePower: 8, reefers: 5 },
-    { hour: 10, sts: 14, tt: 14, rtg: 13, shorePower: 8, reefers: 5 },
-    { hour: 11, sts: 15, tt: 14, rtg: 13, shorePower: 9, reefers: 5 },
-    { hour: 12, sts: 15, tt: 15, rtg: 13, shorePower: 9, reefers: 5 },
-    { hour: 13, sts: 14, tt: 16, rtg: 13, shorePower: 8, reefers: 5 },
-    { hour: 14, sts: 15, tt: 14, rtg: 13, shorePower: 8, reefers: 5 },
-    { hour: 15, sts: 13, tt: 16, rtg: 12, shorePower: 7, reefers: 5 },
-    { hour: 16, sts: 11, tt: 14, rtg: 10, shorePower: 7, reefers: 5},
-    { hour: 17, sts: 10, tt: 12, rtg: 9, shorePower: 7, reefers: 5 },
-    { hour: 18, sts: 12, tt: 14, rtg: 11, shorePower: 7, reefers: 5},
-    { hour: 19, sts: 10, tt: 12, rtg: 9, shorePower: 7, reefers: 5},
-    { hour: 20, sts: 9, tt: 10, rtg: 8, shorePower: 7, reefers: 5 },
-    { hour: 21, sts: 8, tt: 9, rtg: 7, shorePower: 5, reefers: 5 },
-    { hour: 22, sts: 8, tt: 9, rtg: 7, shorePower: 5, reefers: 5 },
-    { hour: 23, sts: 9, tt: 10, rtg: 8, shorePower: 5, reefers: 5,},
-    { hour: 24, sts: 10, tt: 12, rtg: 9, shorePower: 5, reefers: 5 },
-  ];
+  // Generate 15-minute interval data for 24 hours (96 data points)
+  const generateLoadData = (): LoadData[] => {
+    const data: LoadData[] = [];
+    const baseHourlyData = [
+      { sts: 10, tt: 12, rtg: 8, shorePower: 5, reefers: 5 },
+      { sts: 9, tt: 10, rtg: 7, shorePower: 5, reefers: 5 },
+      { sts: 8, tt: 9, rtg: 6, shorePower: 5, reefers: 5 },
+      { sts: 8, tt: 9, rtg: 6, shorePower: 5, reefers: 5 },
+      { sts: 9, tt: 10, rtg: 7, shorePower: 5, reefers: 5 },
+      { sts: 11, tt: 14, rtg: 10, shorePower: 8, reefers: 5 },
+      { sts: 13, tt: 16, rtg: 12, shorePower: 8, reefers: 5 },
+      { sts: 12, tt: 15, rtg: 11, shorePower: 8, reefers: 5 },
+      { sts: 13, tt: 16, rtg: 12, shorePower: 8, reefers: 5 },
+      { sts: 14, tt: 14, rtg: 13, shorePower: 8, reefers: 5 },
+      { sts: 15, tt: 14, rtg: 13, shorePower: 9, reefers: 5 },
+      { sts: 15, tt: 15, rtg: 13, shorePower: 9, reefers: 5 },
+      { sts: 14, tt: 16, rtg: 13, shorePower: 8, reefers: 5 },
+      { sts: 15, tt: 14, rtg: 13, shorePower: 8, reefers: 5 },
+      { sts: 13, tt: 16, rtg: 12, shorePower: 7, reefers: 5 },
+      { sts: 11, tt: 14, rtg: 10, shorePower: 7, reefers: 5 },
+      { sts: 10, tt: 12, rtg: 9, shorePower: 7, reefers: 5 },
+      { sts: 12, tt: 14, rtg: 11, shorePower: 7, reefers: 5 },
+      { sts: 10, tt: 12, rtg: 9, shorePower: 7, reefers: 5 },
+      { sts: 9, tt: 10, rtg: 8, shorePower: 7, reefers: 5 },
+      { sts: 8, tt: 9, rtg: 7, shorePower: 5, reefers: 5 },
+      { sts: 8, tt: 9, rtg: 7, shorePower: 5, reefers: 5 },
+      { sts: 9, tt: 10, rtg: 8, shorePower: 5, reefers: 5 },
+      { sts: 10, tt: 12, rtg: 9, shorePower: 5, reefers: 5 },
+    ];
+
+    for (let hour = 0; hour < 24; hour++) {
+      for (let quarter = 0; quarter < 4; quarter++) {
+        const minutes = quarter * 15;
+        const time = `${hour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        
+        // Add slight variation to base values for realism
+        const baseData = baseHourlyData[hour];
+        const variation = 0.2; // ±20% variation
+        
+        data.push({
+          time,
+          sts: Math.round(baseData.sts * (1 + (Math.random() - 0.5) * variation)),
+          tt: Math.round(baseData.tt * (1 + (Math.random() - 0.5) * variation)),
+          rtg: Math.round(baseData.rtg * (1 + (Math.random() - 0.5) * variation)),
+          shorePower: Math.round(baseData.shorePower * (1 + (Math.random() - 0.5) * variation)),
+          reefers: Math.round(baseData.reefers * (1 + (Math.random() - 0.5) * variation)),
+        });
+      }
+    }
+    
+    return data;
+  };
+
+  const loadData = generateLoadData();
 
   const gridCapacity = 60; // MW
   const maxLoad = Math.max(...loadData.map(d => d.sts + d.tt + d.rtg + d.shorePower + d.reefers));
@@ -80,7 +107,7 @@ const LoadProfileChart: React.FC = () => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white p-3 rounded-lg shadow-lg border">
-          <p className="font-semibold mb-2">{`Hour ${label}`}</p>
+          <p className="font-semibold mb-2">{`Time: ${label}`}</p>
           {payload.map((entry: any, index: number) => (
             <div key={index} className="flex items-center gap-2 mb-1">
               <div
@@ -98,6 +125,13 @@ const LoadProfileChart: React.FC = () => {
     return null;
   };
 
+  const formatXAxisTick = (value: string) => {
+    // Only show hours at major intervals (every 4 hours)
+    const [hour] = value.split(':');
+    const hourNum = parseInt(hour);
+    return hourNum % 4 === 0 && value.endsWith(':00') ? `${hour}:00` : '';
+  };
+
   return (
     <div className="relative">
       <div style={{ width: '100%', height: '500px' }}>
@@ -113,10 +147,15 @@ const LoadProfileChart: React.FC = () => {
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" />
             <XAxis 
-              dataKey="hour" 
+              dataKey="time" 
               stroke="#666"
-              fontSize={12}
+              fontSize={11}
               tickLine={false}
+              tickFormatter={formatXAxisTick}
+              interval="preserveStartEnd"
+              angle={-45}
+              textAnchor="end"
+              height={80}
             />
             <YAxis 
               stroke="#666"
