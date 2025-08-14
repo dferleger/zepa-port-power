@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Calculator, Zap, Battery, Ship, Truck, Settings } from 'lucide-react';
-import chartImage from '@/assets/load-profile-chart.png';
+import LoadProfileChart from './LoadProfileChart';
 
 interface EquipmentData {
   name: string;
@@ -505,11 +505,7 @@ export default function ZepaExplorer() {
             <CardContent className="space-y-6">
               <div className="grid lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
-                  <img 
-                    src={chartImage} 
-                    alt="Load profile chart showing stacked areas for different equipment types over 24 hours"
-                    className="w-full rounded-lg border"
-                  />
+                  <LoadProfileChart />
                 </div>
                 <div className="space-y-4">
                   <div className="bg-muted p-4 rounded-lg">
