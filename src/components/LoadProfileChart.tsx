@@ -1,12 +1,15 @@
-import React, { useMemo, useState } from 'react';
+import React from 'react';
 import {
-  ReactFlow,
-  Background,
-  Controls,
-  Node,
-  Edge,
-} from '@xyflow/react';
-import '@xyflow/react/dist/style.css';
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  ReferenceLine,
+} from 'recharts';
 
 interface LoadData {
   hour: number;
@@ -27,11 +30,8 @@ interface TooltipData {
 }
 
 const LoadProfileChart: React.FC = () => {
-  const [hoveredData, setHoveredData] = useState<TooltipData | null>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
   // Sample load data for 24 hours
-  const loadData: LoadData[] = useMemo(() => [
+  const loadData: LoadData[] = [
     { hour: 1, sts: 5, tt: 8, rtg: 6, shorePower: 0, reefers: 2, batteryCharge: 3, total: 24 },
     { hour: 2, sts: 4, tt: 6, rtg: 5, shorePower: 0, reefers: 2, batteryCharge: 2, total: 19 },
     { hour: 3, sts: 3, tt: 4, rtg: 4, shorePower: 0, reefers: 2, batteryCharge: 1, total: 14 },
@@ -56,16 +56,17 @@ const LoadProfileChart: React.FC = () => {
     { hour: 22, sts: 4, tt: 5, rtg: 4, shorePower: 0, reefers: 2, batteryCharge: 1, total: 16 },
     { hour: 23, sts: 5, tt: 6, rtg: 5, shorePower: 0, reefers: 2, batteryCharge: 2, total: 20 },
     { hour: 24, sts: 5, tt: 8, rtg: 6, shorePower: 0, reefers: 2, batteryCharge: 3, total: 24 },
-  ], []);
+  ];
 
   const gridCapacity = 45; // MW
   const maxLoad = Math.max(...loadData.map(d => d.total));
+  const yAxisMax = Math.max(gridCapacity * 0.8, maxLoad * 0.9); // Set max below grid capacity
 
   const equipmentColors = {
     sts: '#DEF4A1',        // light green
     tt: '#001160',         // dark blue  
     rtg: '#000850',        // navy blue
-    shorePower: '#DEF4A1', // light green
+    shorePower: '#C6F069', // bright green
     reefers: '#EBEBEB',    // grey
     batteryCharge: '#FF69B4' // pink
   };
@@ -79,318 +80,122 @@ const LoadProfileChart: React.FC = () => {
     batteryCharge: 'Battery Charging'
   };
 
-  // Create nodes for the chart
-  const nodes: Node[] = useMemo(() => {
-    const chartNodes: Node[] = [];
-    const chartWidth = 800;
-    const chartHeight = 400;
-    const paddingX = 60;
-    const paddingY = 60;
-    const plotWidth = chartWidth - 2 * paddingX;
-    const plotHeight = chartHeight - 2 * paddingY;
-
-    // Add background chart area
-    chartNodes.push({
-      id: 'chart-background',
-      type: 'default',
-      position: { x: 0, y: 0 },
-      data: { label: '' },
-      style: {
-        width: chartWidth,
-        height: chartHeight,
-        backgroundColor: 'white',
-        border: '2px solid hsl(var(--border))',
-        borderRadius: '8px',
-        zIndex: 0,
-      },
-      draggable: false,
-      selectable: false,
-    });
-
-    // Add grid lines
-    for (let i = 0; i <= 5; i++) {
-      const y = paddingY + (plotHeight * i) / 5;
-      const value = maxLoad - (maxLoad * i) / 5;
-      
-      // Horizontal grid line
-      chartNodes.push({
-        id: `grid-h-${i}`,
-        type: 'default',
-        position: { x: paddingX, y: y - 1 },
-        data: { label: '' },
-        style: {
-          width: plotWidth,
-          height: 1,
-          backgroundColor: '#E5E5E5',
-          border: 'none',
-        },
-        draggable: false,
-        selectable: false,
-      });
-
-      // Y-axis label
-      chartNodes.push({
-        id: `y-label-${i}`,
-        type: 'default',
-        position: { x: 10, y: y - 10 },
-        data: { label: Math.round(value).toString() },
-        style: {
-          width: 40,
-          height: 20,
-          backgroundColor: 'transparent',
-          border: 'none',
-          fontSize: '12px',
-          color: '#666',
-        },
-        draggable: false,
-        selectable: false,
-      });
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white p-3 rounded-lg shadow-lg border">
+          <p className="font-semibold mb-2">{`Hour ${label}`}</p>
+          {payload.map((entry: any, index: number) => (
+            <div key={index} className="flex items-center gap-2 mb-1">
+              <div
+                className="w-3 h-3 rounded"
+                style={{ backgroundColor: entry.color }}
+              />
+              <span className="text-sm">
+                {equipmentLabels[entry.dataKey as keyof typeof equipmentLabels]}: {entry.value} MW
+              </span>
+            </div>
+          ))}
+        </div>
+      );
     }
-
-    // Add vertical grid lines and X-axis labels
-    for (let i = 0; i <= 24; i += 4) {
-      const x = paddingX + (plotWidth * i) / 24;
-      
-      if (i > 0) {
-        chartNodes.push({
-          id: `grid-v-${i}`,
-          type: 'default',
-          position: { x: x - 1, y: paddingY },
-          data: { label: '' },
-          style: {
-            width: 1,
-            height: plotHeight,
-            backgroundColor: '#E5E5E5',
-            border: 'none',
-          },
-          draggable: false,
-          selectable: false,
-        });
-      }
-
-      // X-axis label
-      chartNodes.push({
-        id: `x-label-${i}`,
-        type: 'default',
-        position: { x: x - 10, y: chartHeight - 40 },
-        data: { label: i === 0 ? '0' : i.toString() },
-        style: {
-          width: 20,
-          height: 20,
-          backgroundColor: 'transparent',
-          border: 'none',
-          fontSize: '12px',
-          color: '#666',
-        },
-        draggable: false,
-        selectable: false,
-      });
-    }
-
-    // Add data bars
-    loadData.forEach((data, index) => {
-      const x = paddingX + (plotWidth * index) / 24;
-      const barWidth = plotWidth / 24 * 0.8;
-      
-      let cumulativeHeight = 0;
-      const equipmentOrder = ['sts', 'tt', 'rtg', 'shorePower', 'reefers', 'batteryCharge'];
-      
-      equipmentOrder.forEach((equipment) => {
-        const value = data[equipment as keyof LoadData] as number;
-        if (value > 0) {
-          const segmentHeight = (plotHeight * value) / maxLoad;
-          const y = paddingY + plotHeight - cumulativeHeight - segmentHeight;
-          
-          chartNodes.push({
-            id: `bar-${index}-${equipment}`,
-            type: 'default',
-            position: { x, y },
-            data: { 
-              label: '',
-              equipment,
-              value,
-              hour: data.hour,
-              color: equipmentColors[equipment as keyof typeof equipmentColors]
-            },
-            style: {
-              width: barWidth,
-              height: segmentHeight,
-              backgroundColor: equipmentColors[equipment as keyof typeof equipmentColors],
-              border: '1px solid rgba(255,255,255,0.5)',
-              borderRadius: '0px',
-              cursor: 'pointer',
-            },
-            draggable: false,
-            selectable: false,
-          });
-          
-          cumulativeHeight += segmentHeight;
-        }
-      });
-    });
-
-    // Add grid capacity line
-    const gridCapacityY = paddingY + plotHeight - (plotHeight * gridCapacity) / maxLoad;
-    chartNodes.push({
-      id: 'grid-capacity-line',
-      type: 'default',
-      position: { x: paddingX, y: gridCapacityY - 2 },
-      data: { label: '' },
-      style: {
-        width: plotWidth,
-        height: 4,
-        backgroundColor: '#FF69B4',
-        border: 'none',
-        borderRadius: '2px',
-        zIndex: 10,
-      },
-      draggable: false,
-      selectable: false,
-    });
-
-    // Grid capacity label
-    chartNodes.push({
-      id: 'grid-capacity-label',
-      type: 'default',
-      position: { x: paddingX + plotWidth - 120, y: gridCapacityY - 25 },
-      data: { label: `Grid Capacity: ${gridCapacity} MW` },
-      style: {
-        width: 120,
-        height: 20,
-        backgroundColor: 'rgba(255, 105, 180, 0.9)',
-        color: 'white',
-        border: 'none',
-        borderRadius: '4px',
-        fontSize: '12px',
-        fontWeight: 'bold',
-        padding: '2px 4px',
-      },
-      draggable: false,
-      selectable: false,
-    });
-
-    // Add axis labels
-    chartNodes.push({
-      id: 'x-axis-title',
-      type: 'default',
-      position: { x: chartWidth / 2 - 30, y: chartHeight - 15 },
-      data: { label: 'Time (Hours)' },
-      style: {
-        width: 80,
-        height: 20,
-        backgroundColor: 'transparent',
-        border: 'none',
-        fontSize: '14px',
-        fontWeight: 'bold',
-        color: '#333',
-      },
-      draggable: false,
-      selectable: false,
-    });
-
-    chartNodes.push({
-      id: 'y-axis-title',
-      type: 'default',
-      position: { x: 15, y: 20 },
-      data: { label: 'Load (MW)' },
-      style: {
-        width: 80,
-        height: 20,
-        backgroundColor: 'transparent',
-        border: 'none',
-        fontSize: '14px',
-        fontWeight: 'bold',
-        color: '#333',
-        transform: 'rotate(-90deg)',
-        transformOrigin: 'center',
-      },
-      draggable: false,
-      selectable: false,
-    });
-
-    return chartNodes;
-  }, [loadData, maxLoad, gridCapacity]);
-
-  const handleNodeMouseEnter = (event: React.MouseEvent, node: Node) => {
-    if (node.id.startsWith('bar-')) {
-      const { equipment, value, hour, color } = node.data;
-      setHoveredData({
-        equipment: equipmentLabels[equipment as keyof typeof equipmentLabels],
-        value: value as number,
-        hour: hour as number,
-        color: color as string,
-      });
-      setMousePosition({ x: event.clientX, y: event.clientY });
-    }
-  };
-
-  const handleNodeMouseLeave = () => {
-    setHoveredData(null);
-  };
-
-  const handleMouseMove = (event: React.MouseEvent) => {
-    setMousePosition({ x: event.clientX, y: event.clientY });
+    return null;
   };
 
   return (
     <div className="relative">
       <div style={{ width: '100%', height: '500px' }}>
-        <ReactFlow
-          nodes={nodes}
-          edges={[]}
-          fitView
-          fitViewOptions={{ padding: 0.1 }}
-          onNodeMouseEnter={handleNodeMouseEnter}
-          onNodeMouseLeave={handleNodeMouseLeave}
-          onMouseMove={handleMouseMove}
-          nodesDraggable={false}
-          nodesConnectable={false}
-          elementsSelectable={false}
-          panOnDrag={false}
-          zoomOnScroll={false}
-          zoomOnPinch={false}
-          zoomOnDoubleClick={false}
-          preventScrolling={false}
-        >
-          <Background />
-          <Controls showInteractive={false} />
-        </ReactFlow>
-      </div>
-
-      {/* Tooltip */}
-      {hoveredData && (
-        <div
-          className="absolute z-50 bg-white p-3 rounded-lg shadow-lg border pointer-events-none"
-          style={{
-            left: mousePosition.x + 10,
-            top: mousePosition.y - 10,
-            transform: 'translate(-50%, -100%)',
-          }}
-        >
-          <div className="flex items-center gap-2 mb-1">
-            <div
-              className="w-3 h-3 rounded"
-              style={{ backgroundColor: hoveredData.color }}
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart
+            data={loadData}
+            margin={{
+              top: 20,
+              right: 30,
+              left: 20,
+              bottom: 60,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" />
+            <XAxis 
+              dataKey="hour" 
+              stroke="#666"
+              fontSize={12}
+              tickLine={false}
             />
-            <span className="font-semibold text-sm">{hoveredData.equipment}</span>
-          </div>
-          <div className="text-sm text-muted-foreground">
-            Hour {hoveredData.hour}: <span className="font-medium">{hoveredData.value} MW</span>
-          </div>
-        </div>
-      )}
-
-      {/* Legend */}
-      <div className="mt-4 flex flex-wrap gap-4 justify-center">
-        {Object.entries(equipmentLabels).map(([key, label]) => (
-          <div key={key} className="flex items-center gap-2">
-            <div
-              className="w-4 h-4 rounded"
-              style={{ backgroundColor: equipmentColors[key as keyof typeof equipmentColors] }}
+            <YAxis 
+              stroke="#666"
+              fontSize={12}
+              tickLine={false}
+              domain={[0, yAxisMax]}
+              label={{ value: 'Load (MW)', angle: -90, position: 'insideLeft' }}
             />
-            <span className="text-sm">{label}</span>
-          </div>
-        ))}
+            <Tooltip content={<CustomTooltip />} />
+            <Legend 
+              verticalAlign="bottom" 
+              height={36}
+              iconType="line"
+            />
+            
+            {/* Grid capacity reference line - thin line */}
+            <ReferenceLine 
+              y={gridCapacity} 
+              stroke="#FF69B4" 
+              strokeWidth={1}
+              strokeDasharray="5 5"
+              label="Grid Capacity (45 MW)"
+            />
+            
+            {/* Equipment lines - no dots */}
+            <Line 
+              type="monotone" 
+              dataKey="sts" 
+              stroke={equipmentColors.sts} 
+              strokeWidth={2}
+              dot={false}
+              name={equipmentLabels.sts}
+            />
+            <Line 
+              type="monotone" 
+              dataKey="tt" 
+              stroke={equipmentColors.tt} 
+              strokeWidth={2}
+              dot={false}
+              name={equipmentLabels.tt}
+            />
+            <Line 
+              type="monotone" 
+              dataKey="rtg" 
+              stroke={equipmentColors.rtg} 
+              strokeWidth={2}
+              dot={false}
+              name={equipmentLabels.rtg}
+            />
+            <Line 
+              type="monotone" 
+              dataKey="shorePower" 
+              stroke={equipmentColors.shorePower} 
+              strokeWidth={2}
+              dot={false}
+              name={equipmentLabels.shorePower}
+            />
+            <Line 
+              type="monotone" 
+              dataKey="reefers" 
+              stroke={equipmentColors.reefers} 
+              strokeWidth={2}
+              dot={false}
+              name={equipmentLabels.reefers}
+            />
+            <Line 
+              type="monotone" 
+              dataKey="batteryCharge" 
+              stroke={equipmentColors.batteryCharge} 
+              strokeWidth={2}
+              dot={false}
+              name={equipmentLabels.batteryCharge}
+            />
+          </LineChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );
