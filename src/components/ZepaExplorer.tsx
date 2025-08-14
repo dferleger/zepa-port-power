@@ -243,11 +243,71 @@ export default function ZepaExplorer() {
                 <table className="w-full border-collapse">
                   <thead>
                     <tr className="border-b">
-                      <th className="text-left p-3 font-medium">Port equipment</th>
-                      <th className="text-left p-3 font-medium">Number of all equipment</th>
-                      <th className="text-left p-3 font-medium">Number electrified</th>
-                      <th className="text-left p-3 font-medium">% electrified</th>
-                      <th className="text-left p-3 font-medium">Moves per day per vehicle</th>
+                      <th className="text-left p-3 font-medium">
+                        <div className="flex items-center gap-2">
+                          Port equipment
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Equipment type abbreviations and specifications will be detailed in methodology section.</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </div>
+                      </th>
+                      <th className="text-left p-3 font-medium">
+                        <div className="flex items-center gap-2">
+                          Number of all equipment
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Total quantity of this equipment type currently operational in the terminal.</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </div>
+                      </th>
+                      <th className="text-left p-3 font-medium">
+                        <div className="flex items-center gap-2">
+                          Number electrified
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Number of electric/battery-powered units planned or currently in operation.</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </div>
+                      </th>
+                      <th className="text-left p-3 font-medium">
+                        <div className="flex items-center gap-2">
+                          % electrified
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Automatically calculated percentage of electrified equipment relative to total fleet.</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </div>
+                      </th>
+                      <th className="text-left p-3 font-medium">
+                        <div className="flex items-center gap-2">
+                          Moves per day per vehicle
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Average daily operational cycles for each unit based on terminal throughput and efficiency.</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </div>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -295,11 +355,71 @@ export default function ZepaExplorer() {
                 <table className="w-full border-collapse">
                   <thead>
                     <tr className="border-b">
-                      <th className="text-left p-3 font-medium">Port equipment</th>
-                      <th className="text-left p-3 font-medium">Number of all equipment</th>
-                      <th className="text-left p-3 font-medium">Number electrified</th>
-                      <th className="text-left p-3 font-medium">% electrified</th>
-                      <th className="text-left p-3 font-medium">Moves per day per vehicle</th>
+                      <th className="text-left p-3 font-medium">
+                        <div className="flex items-center gap-2">
+                          Port equipment
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Equipment type abbreviations and specifications will be detailed in methodology section.</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </div>
+                      </th>
+                      <th className="text-left p-3 font-medium">
+                        <div className="flex items-center gap-2">
+                          Number of all equipment
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Total quantity of this equipment type currently operational in the terminal.</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </div>
+                      </th>
+                      <th className="text-left p-3 font-medium">
+                        <div className="flex items-center gap-2">
+                          Number electrified
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Number of electric/battery-powered units planned or currently in operation.</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </div>
+                      </th>
+                      <th className="text-left p-3 font-medium">
+                        <div className="flex items-center gap-2">
+                          % electrified
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Automatically calculated percentage of electrified equipment relative to total fleet.</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </div>
+                      </th>
+                      <th className="text-left p-3 font-medium">
+                        <div className="flex items-center gap-2">
+                          Moves per day per vehicle
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Average daily operational cycles for each unit based on terminal throughput and efficiency.</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </div>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -358,13 +478,97 @@ export default function ZepaExplorer() {
               <table className="w-full border-collapse">
                 <thead>
                   <tr className="border-b">
-                    <th className="text-left p-3 font-medium">Equipment</th>
-                    <th className="text-left p-3 font-medium">Depot charging (%)</th>
-                    <th className="text-left p-3 font-medium">Vehicle rotation (%)</th>
-                    <th className="text-left p-3 font-medium">Opportunity charging (%)</th>
-                    <th className="text-left p-3 font-medium">Battery swapping (%)</th>
-                    <th className="text-left p-3 font-medium">Extra vehicles</th>
-                    <th className="text-left p-3 font-medium">Number of chargers</th>
+                    <th className="text-left p-3 font-medium">
+                      <div className="flex items-center gap-2">
+                        Equipment
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Equipment type abbreviations and specifications will be detailed in methodology section.</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
+                    </th>
+                    <th className="text-left p-3 font-medium">
+                      <div className="flex items-center gap-2">
+                        Depot charging (%)
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Percentage of fleet charged at central depot facilities during off-shift hours.</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
+                    </th>
+                    <th className="text-left p-3 font-medium">
+                      <div className="flex items-center gap-2">
+                        Vehicle rotation (%)
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Percentage requiring vehicle rotation strategy due to battery limitations.</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
+                    </th>
+                    <th className="text-left p-3 font-medium">
+                      <div className="flex items-center gap-2">
+                        Opportunity charging (%)
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Percentage utilizing quick charging during operational breaks and waiting periods.</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
+                    </th>
+                    <th className="text-left p-3 font-medium">
+                      <div className="flex items-center gap-2">
+                        Battery swapping (%)
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Percentage using automated battery swapping systems for continuous operation.</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
+                    </th>
+                    <th className="text-left p-3 font-medium">
+                      <div className="flex items-center gap-2">
+                        Extra vehicles
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Additional vehicles needed for rotation strategy calculated from charging requirements.</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
+                    </th>
+                    <th className="text-left p-3 font-medium">
+                      <div className="flex items-center gap-2">
+                        Number of chargers
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Total charging infrastructure units required based on fleet size and charging strategy.</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
