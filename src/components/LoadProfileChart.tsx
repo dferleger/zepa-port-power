@@ -136,9 +136,9 @@ const LoadProfileChart: React.FC = () => {
             <ReferenceLine 
               y={gridCapacity} 
               stroke="#FF69B4" 
-              strokeWidth={1}
+              strokeWidth={2}
               strokeDasharray="5 5"
-              label="Grid Capacity (45 MW)"
+              label="Grid Capacity (60 MW)"
             />
             
             {/* Stacked areas - order matters for stacking */}
