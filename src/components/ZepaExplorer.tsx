@@ -126,7 +126,7 @@ export default function ZepaExplorer() {
         
         {/* Section 1: Terminal Set-up */}
         <Card>
-          <CardHeader>
+          <CardHeader className="bg-primary text-primary-foreground rounded-t-lg">
             <CardTitle className="flex items-center gap-2">
               <Settings className="h-5 w-5" />
               Terminal Set-up
@@ -181,7 +181,7 @@ export default function ZepaExplorer() {
 
         {/* Section 2: Equipment Table */}
         <Card>
-          <CardHeader>
+          <CardHeader className="bg-accent text-accent-foreground rounded-t-lg">
             <CardTitle className="flex items-center gap-2">
               <Truck className="h-5 w-5" />
               Equipment Table
@@ -296,7 +296,7 @@ export default function ZepaExplorer() {
 
         {/* Section 3: Charging Strategies */}
         <Card>
-          <CardHeader>
+          <CardHeader className="bg-success text-success-foreground rounded-t-lg">
             <CardTitle className="flex items-center gap-2">
               <Battery className="h-5 w-5" />
               Charging Strategies for Untethered Equipment
@@ -379,7 +379,7 @@ export default function ZepaExplorer() {
 
         {/* Section 4: Other Load Profiles */}
         <Card>
-          <CardHeader>
+          <CardHeader className="bg-secondary text-secondary-foreground rounded-t-lg">
             <CardTitle className="flex items-center gap-2">
               <Ship className="h-5 w-5" />
               Other Load Profiles
@@ -426,8 +426,11 @@ export default function ZepaExplorer() {
 
         {/* Section 5: BESS System */}
         <Card>
-          <CardHeader>
-            <CardTitle>BESS System</CardTitle>
+          <CardHeader className="bg-muted text-muted-foreground rounded-t-lg">
+            <CardTitle className="flex items-center gap-2">
+              <Battery className="h-5 w-5" />
+              BESS System
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center space-x-2">
@@ -462,8 +465,11 @@ export default function ZepaExplorer() {
 
         {/* Section 6: Custom Load Input */}
         <Card>
-          <CardHeader>
-            <CardTitle>Custom Load Input</CardTitle>
+          <CardHeader className="bg-accent/50 text-accent-foreground rounded-t-lg">
+            <CardTitle className="flex items-center gap-2">
+              <Calculator className="h-5 w-5" />
+              Custom Load Input
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <Dialog>
