@@ -58,7 +58,7 @@ const LoadProfileChart: React.FC = () => {
 
   const gridCapacity = 60; // MW
   const maxLoad = Math.max(...loadData.map(d => d.sts + d.tt + d.rtg + d.shorePower + d.reefers));
-  const yAxisMax = Math.max(gridCapacity * 0.8, maxLoad * 0.9); // Set max below grid capacity
+  const yAxisMax = Math.max(gridCapacity * 1.1, maxLoad * 1.2); // Ensure grid capacity line is visible
 
   const equipmentColors = {
     sts: '#DEF4A1',        // light green
