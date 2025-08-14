@@ -113,7 +113,7 @@ export default function ZepaExplorer() {
           <div className="container mx-auto px-6 max-w-6xl">
             <div className="flex items-center gap-3 mb-4">
               <Zap className="h-8 w-8 text-accent" />
-              <h1 className="text-3xl font-bold">ZEPA Alliance – Port Electrification Explorer</h1>
+              <h1 className="text-3xl font-bold">Load Profile Scenario Explorer</h1>
             </div>
             <p className="text-xl mb-4 opacity-90">
               Accelerating port decarbonization by making battery-electric container handling equipment (BE-CHE) affordable and accessible this decade.
