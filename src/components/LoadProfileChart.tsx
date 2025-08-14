@@ -126,10 +126,8 @@ const LoadProfileChart: React.FC = () => {
   };
 
   const formatXAxisTick = (value: string) => {
-    // Only show hours at major intervals (every 4 hours)
-    const [hour] = value.split(':');
-    const hourNum = parseInt(hour);
-    return hourNum % 4 === 0 && value.endsWith(':00') ? `${hour}:00` : '';
+    // Show labels only at the top of each hour
+    return value.endsWith(':00') ? value : '';
   };
 
   return (
@@ -150,12 +148,14 @@ const LoadProfileChart: React.FC = () => {
               dataKey="time" 
               stroke="#666"
               fontSize={11}
-              tickLine={false}
+              tickLine={true}
               tickFormatter={formatXAxisTick}
-              interval="preserveStartEnd"
+              interval={0}
               angle={-45}
               textAnchor="end"
               height={80}
+              tick={{ fontSize: 10 }}
+              tickSize={3}
             />
             <YAxis 
               stroke="#666"
