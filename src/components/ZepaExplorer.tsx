@@ -710,8 +710,8 @@ export default function ZepaExplorer() {
             <div className="space-y-4">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <Label htmlFor="reefers" className="bg-yellow-200 px-2 py-1 rounded">
-                    # reefer containers on ship and in terminal
+                  <Label htmlFor="reefers" className="rounded">
+                    Number of reefer containers on ship and in terminal
                   </Label>
                   <Tooltip>
                     <TooltipTrigger>
