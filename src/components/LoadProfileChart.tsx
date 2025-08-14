@@ -1,7 +1,7 @@
 import React from 'react';
 import {
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -106,7 +106,7 @@ const LoadProfileChart: React.FC = () => {
     <div className="relative">
       <div style={{ width: '100%', height: '500px' }}>
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart
+          <AreaChart
             data={loadData}
             margin={{
               top: 20,
@@ -133,7 +133,7 @@ const LoadProfileChart: React.FC = () => {
             <Legend 
               verticalAlign="bottom" 
               height={36}
-              iconType="line"
+              iconType="rect"
             />
             
             {/* Grid capacity reference line - thin line */}
@@ -145,56 +145,56 @@ const LoadProfileChart: React.FC = () => {
               label="Grid Capacity (45 MW)"
             />
             
-            {/* Equipment lines - no dots */}
-            <Line 
+            {/* Stacked areas - order matters for stacking */}
+            <Area 
               type="monotone" 
               dataKey="sts" 
+              stackId="1"
               stroke={equipmentColors.sts} 
-              strokeWidth={2}
-              dot={false}
+              fill={equipmentColors.sts}
               name={equipmentLabels.sts}
             />
-            <Line 
+            <Area 
               type="monotone" 
               dataKey="tt" 
+              stackId="1"
               stroke={equipmentColors.tt} 
-              strokeWidth={2}
-              dot={false}
+              fill={equipmentColors.tt}
               name={equipmentLabels.tt}
             />
-            <Line 
+            <Area 
               type="monotone" 
               dataKey="rtg" 
+              stackId="1"
               stroke={equipmentColors.rtg} 
-              strokeWidth={2}
-              dot={false}
+              fill={equipmentColors.rtg}
               name={equipmentLabels.rtg}
             />
-            <Line 
+            <Area 
               type="monotone" 
               dataKey="shorePower" 
+              stackId="1"
               stroke={equipmentColors.shorePower} 
-              strokeWidth={2}
-              dot={false}
+              fill={equipmentColors.shorePower}
               name={equipmentLabels.shorePower}
             />
-            <Line 
+            <Area 
               type="monotone" 
               dataKey="reefers" 
+              stackId="1"
               stroke={equipmentColors.reefers} 
-              strokeWidth={2}
-              dot={false}
+              fill={equipmentColors.reefers}
               name={equipmentLabels.reefers}
             />
-            <Line 
+            <Area 
               type="monotone" 
               dataKey="batteryCharge" 
+              stackId="1"
               stroke={equipmentColors.batteryCharge} 
-              strokeWidth={2}
-              dot={false}
+              fill={equipmentColors.batteryCharge}
               name={equipmentLabels.batteryCharge}
             />
-          </LineChart>
+          </AreaChart>
         </ResponsiveContainer>
       </div>
     </div>
