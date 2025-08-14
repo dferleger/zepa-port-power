@@ -1,0 +1,555 @@
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Calculator, Zap, Battery, Ship, Truck, Settings } from 'lucide-react';
+import chartImage from '@/assets/load-profile-chart.png';
+
+interface EquipmentData {
+  name: string;
+  total: number;
+  electrified: number;
+  movesPerDay: number;
+}
+
+interface ChargingStrategy {
+  depot: number;
+  rotation: number;
+  opportunity: number;
+  swapping: number;
+}
+
+export default function ZepaExplorer() {
+  const [terminalArchetype, setTerminalArchetype] = useState('');
+  const [gridCapacity, setGridCapacity] = useState(45);
+  const [shiftSchedule, setShiftSchedule] = useState('');
+  const [overallMoves, setOverallMoves] = useState(8000);
+  
+  // Equipment data
+  const [untetheredEquipment, setUntetheredEquipment] = useState<EquipmentData[]>([
+    { name: 'TT', total: 20, electrified: 15, movesPerDay: 50 },
+    { name: 'SC', total: 8, electrified: 6, movesPerDay: 80 },
+    { name: 'AGV', total: 12, electrified: 10, movesPerDay: 60 },
+    { name: 'RS', total: 4, electrified: 2, movesPerDay: 30 },
+  ]);
+  
+  const [tetheredEquipment, setTetheredEquipment] = useState<EquipmentData[]>([
+    { name: 'STS', total: 6, electrified: 4, movesPerDay: 200 },
+    { name: 'RTG', total: 15, electrified: 12, movesPerDay: 40 },
+    { name: 'ASC', total: 10, electrified: 8, movesPerDay: 60 },
+  ]);
+
+  // Charging strategies
+  const [chargingStrategies, setChargingStrategies] = useState<{[key: string]: ChargingStrategy}>({
+    TT: { depot: 60, rotation: 25, opportunity: 15, swapping: 0 },
+    SC: { depot: 50, rotation: 30, opportunity: 20, swapping: 0 },
+    AGV: { depot: 40, rotation: 35, opportunity: 25, swapping: 0 },
+    RS: { depot: 100, rotation: 0, opportunity: 0, swapping: 0 },
+  });
+
+  // Other inputs
+  const [shorePowerConnections, setShorePowerConnections] = useState(4);
+  const [shorePowerSize, setShorePowerSize] = useState(2.5);
+  const [reeferContainers, setReeferContainers] = useState(150);
+  const [includeBESS, setIncludeBESS] = useState(false);
+  const [bessSize, setBessSize] = useState(5);
+  
+  const [showResults, setShowResults] = useState(false);
+
+  const updateEquipmentElectrified = (
+    equipment: EquipmentData[], 
+    setEquipment: React.Dispatch<React.SetStateAction<EquipmentData[]>>, 
+    index: number, 
+    field: 'total' | 'electrified' | 'movesPerDay', 
+    value: number
+  ) => {
+    const newEquipment = [...equipment];
+    newEquipment[index] = { ...newEquipment[index], [field]: value };
+    setEquipment(newEquipment);
+  };
+
+  const updateChargingStrategy = (equipment: string, strategy: string, value: number) => {
+    if (equipment === 'RS' && strategy !== 'depot') return; // RS only supports depot charging
+    
+    const current = chargingStrategies[equipment];
+    const others = Object.keys(current).filter(k => k !== strategy);
+    const remaining = 100 - value;
+    const otherTotal = others.reduce((sum, key) => sum + current[key as keyof ChargingStrategy], 0);
+    
+    const newStrategy = { ...current, [strategy]: value };
+    
+    if (otherTotal > 0) {
+      others.forEach(key => {
+        newStrategy[key as keyof ChargingStrategy] = Math.round((current[key as keyof ChargingStrategy] / otherTotal) * remaining);
+      });
+    }
+    
+    setChargingStrategies(prev => ({ ...prev, [equipment]: newStrategy }));
+  };
+
+  const calculateExtraVehicles = (equipment: EquipmentData, strategies: ChargingStrategy) => {
+    // Simplified calculation for demo
+    const rotationFactor = strategies.rotation * 0.01 * 0.2;
+    return Math.round(equipment.electrified * rotationFactor);
+  };
+
+  const calculateChargers = (equipment: EquipmentData, strategies: ChargingStrategy) => {
+    // Simplified calculation for demo
+    const depotFactor = strategies.depot * 0.01 * 0.3;
+    const opportunityFactor = strategies.opportunity * 0.01 * 0.5;
+    return Math.round(equipment.electrified * (depotFactor + opportunityFactor));
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="bg-primary text-primary-foreground py-12">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <div className="flex items-center gap-3 mb-4">
+            <Zap className="h-8 w-8 text-accent" />
+            <h1 className="text-3xl font-bold">ZEPA Alliance – Port Electrification Explorer</h1>
+          </div>
+          <p className="text-xl mb-4 opacity-90">
+            Accelerating port decarbonization by making battery-electric container handling equipment (BE-CHE) affordable and accessible this decade.
+          </p>
+          <p className="text-lg opacity-80 max-w-4xl">
+            The ZEPA Explorer is a configurable tool to help port stakeholders assess BE-CHE loads, grid feasibility, and electrification strategies.
+          </p>
+        </div>
+      </header>
+
+      <div className="container mx-auto px-6 py-8 max-w-6xl space-y-8">
+        
+        {/* Section 1: Terminal Set-up */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Settings className="h-5 w-5" />
+              Terminal Set-up
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="space-y-2">
+              <Label htmlFor="archetype">Terminal archetype</Label>
+              <Select value={terminalArchetype} onValueChange={setTerminalArchetype}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select archetype" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="sts-tt-rtg">STS & TT & RTG</SelectItem>
+                  <SelectItem value="sts-asc-sc">STS & ASC & SC</SelectItem>
+                  <SelectItem value="sts-agv-rtg">STS & AGV & RTG</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="grid">Grid capacity (MW)</Label>
+              <Input
+                id="grid"
+                type="number"
+                value={gridCapacity}
+                onChange={(e) => setGridCapacity(Number(e.target.value))}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="schedule">Daily shift schedule</Label>
+              <Select value={shiftSchedule} onValueChange={setShiftSchedule}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select schedule" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="24">24 hours</SelectItem>
+                  <SelectItem value="16">16 hours</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="moves">Overall moves (TEU/day)</Label>
+              <Input
+                id="moves"
+                type="number"
+                value={overallMoves}
+                onChange={(e) => setOverallMoves(Number(e.target.value))}
+              />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 2: Equipment Table */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Truck className="h-5 w-5" />
+              Equipment Table
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {/* Untethered Equipment */}
+            <div>
+              <h3 className="font-semibold mb-4 text-lg">Untethered Equipment</h3>
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="text-left p-3 font-medium">Port equipment</th>
+                      <th className="text-left p-3 font-medium">Number of all equipment</th>
+                      <th className="text-left p-3 font-medium">Number electrified</th>
+                      <th className="text-left p-3 font-medium">% electrified</th>
+                      <th className="text-left p-3 font-medium">Moves per day per vehicle</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {untetheredEquipment.map((equipment, index) => (
+                      <tr key={equipment.name} className="border-b bg-muted/30">
+                        <td className="p-3 font-medium">{equipment.name}</td>
+                        <td className="p-3">
+                          <Input
+                            type="number"
+                            value={equipment.total}
+                            onChange={(e) => updateEquipmentElectrified(untetheredEquipment, setUntetheredEquipment, index, 'total', Number(e.target.value))}
+                            className="w-20"
+                          />
+                        </td>
+                        <td className="p-3">
+                          <Input
+                            type="number"
+                            value={equipment.electrified}
+                            onChange={(e) => updateEquipmentElectrified(untetheredEquipment, setUntetheredEquipment, index, 'electrified', Number(e.target.value))}
+                            className="w-20"
+                          />
+                        </td>
+                        <td className="p-3 font-medium text-primary">
+                          {equipment.total > 0 ? Math.round((equipment.electrified / equipment.total) * 100) : 0}%
+                        </td>
+                        <td className="p-3">
+                          <Input
+                            type="number"
+                            value={equipment.movesPerDay}
+                            onChange={(e) => updateEquipmentElectrified(untetheredEquipment, setUntetheredEquipment, index, 'movesPerDay', Number(e.target.value))}
+                            className="w-20"
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Tethered Equipment */}
+            <div>
+              <h3 className="font-semibold mb-4 text-lg">Tethered Equipment</h3>
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="text-left p-3 font-medium">Port equipment</th>
+                      <th className="text-left p-3 font-medium">Number of all equipment</th>
+                      <th className="text-left p-3 font-medium">Number electrified</th>
+                      <th className="text-left p-3 font-medium">% electrified</th>
+                      <th className="text-left p-3 font-medium">Moves per day per vehicle</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tetheredEquipment.map((equipment, index) => (
+                      <tr key={equipment.name} className="border-b bg-muted/30">
+                        <td className="p-3 font-medium">{equipment.name}</td>
+                        <td className="p-3">
+                          <Input
+                            type="number"
+                            value={equipment.total}
+                            onChange={(e) => updateEquipmentElectrified(tetheredEquipment, setTetheredEquipment, index, 'total', Number(e.target.value))}
+                            className="w-20"
+                          />
+                        </td>
+                        <td className="p-3">
+                          <Input
+                            type="number"
+                            value={equipment.electrified}
+                            onChange={(e) => updateEquipmentElectrified(tetheredEquipment, setTetheredEquipment, index, 'electrified', Number(e.target.value))}
+                            className="w-20"
+                          />
+                        </td>
+                        <td className="p-3 font-medium text-primary">
+                          {equipment.total > 0 ? Math.round((equipment.electrified / equipment.total) * 100) : 0}%
+                        </td>
+                        <td className="p-3">
+                          <Input
+                            type="number"
+                            value={equipment.movesPerDay}
+                            onChange={(e) => updateEquipmentElectrified(tetheredEquipment, setTetheredEquipment, index, 'movesPerDay', Number(e.target.value))}
+                            className="w-20"
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 3: Charging Strategies */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Battery className="h-5 w-5" />
+              Charging Strategies for Untethered Equipment
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="border-b">
+                    <th className="text-left p-3 font-medium">Equipment</th>
+                    <th className="text-left p-3 font-medium">Depot charging (%)</th>
+                    <th className="text-left p-3 font-medium">Vehicle rotation (%)</th>
+                    <th className="text-left p-3 font-medium">Opportunity charging (%)</th>
+                    <th className="text-left p-3 font-medium">Battery swapping (%)</th>
+                    <th className="text-left p-3 font-medium">Extra vehicles</th>
+                    <th className="text-left p-3 font-medium">Number of chargers</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {untetheredEquipment.map((equipment) => (
+                    <tr key={equipment.name} className="border-b bg-muted/30">
+                      <td className="p-3 font-medium">{equipment.name}</td>
+                      <td className="p-3">
+                        <Input
+                          type="number"
+                          value={chargingStrategies[equipment.name]?.depot || 0}
+                          onChange={(e) => updateChargingStrategy(equipment.name, 'depot', Number(e.target.value))}
+                          className="w-20"
+                          max="100"
+                          min="0"
+                        />
+                      </td>
+                      <td className="p-3">
+                        <Input
+                          type="number"
+                          value={chargingStrategies[equipment.name]?.rotation || 0}
+                          onChange={(e) => updateChargingStrategy(equipment.name, 'rotation', Number(e.target.value))}
+                          className="w-20"
+                          max="100"
+                          min="0"
+                          disabled={equipment.name === 'RS'}
+                        />
+                      </td>
+                      <td className="p-3">
+                        <Input
+                          type="number"
+                          value={chargingStrategies[equipment.name]?.opportunity || 0}
+                          onChange={(e) => updateChargingStrategy(equipment.name, 'opportunity', Number(e.target.value))}
+                          className="w-20"
+                          max="100"
+                          min="0"
+                          disabled={equipment.name === 'RS'}
+                        />
+                      </td>
+                      <td className="p-3">
+                        <Input
+                          type="number"
+                          value={chargingStrategies[equipment.name]?.swapping || 0}
+                          onChange={(e) => updateChargingStrategy(equipment.name, 'swapping', Number(e.target.value))}
+                          className="w-20"
+                          max="100"
+                          min="0"
+                          disabled={equipment.name === 'RS'}
+                        />
+                      </td>
+                      <td className="p-3 font-medium text-primary">
+                        {calculateExtraVehicles(equipment, chargingStrategies[equipment.name] || { depot: 0, rotation: 0, opportunity: 0, swapping: 0 })}
+                      </td>
+                      <td className="p-3 font-medium text-primary">
+                        {calculateChargers(equipment, chargingStrategies[equipment.name] || { depot: 0, rotation: 0, opportunity: 0, swapping: 0 })}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 4: Other Load Profiles */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Ship className="h-5 w-5" />
+              Other Load Profiles
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="space-y-4">
+              <h3 className="font-semibold">Shore Power</h3>
+              <div className="space-y-2">
+                <Label htmlFor="shore-connections">Number of connections</Label>
+                <Input
+                  id="shore-connections"
+                  type="number"
+                  value={shorePowerConnections}
+                  onChange={(e) => setShorePowerConnections(Number(e.target.value))}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="shore-size">Size per connection (MW)</Label>
+                <Input
+                  id="shore-size"
+                  type="number"
+                  step="0.1"
+                  value={shorePowerSize}
+                  onChange={(e) => setShorePowerSize(Number(e.target.value))}
+                />
+              </div>
+            </div>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="reefers" className="bg-yellow-200 px-2 py-1 rounded">
+                  # reefer containers on ship and in terminal
+                </Label>
+                <Input
+                  id="reefers"
+                  type="number"
+                  value={reeferContainers}
+                  onChange={(e) => setReeferContainers(Number(e.target.value))}
+                />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 5: BESS System */}
+        <Card>
+          <CardHeader>
+            <CardTitle>BESS System</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="bess"
+                checked={includeBESS}
+                onCheckedChange={(checked) => setIncludeBESS(checked === true)}
+              />
+              <Label htmlFor="bess">Include BESS</Label>
+            </div>
+            {includeBESS && (
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="bess-size">Size (MW)</Label>
+                  <Input
+                    id="bess-size"
+                    type="number"
+                    value={bessSize}
+                    onChange={(e) => setBessSize(Number(e.target.value))}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Estimated Cost</Label>
+                  <div className="p-3 bg-muted rounded text-sm">
+                    ${bessSize}M USD (estimate: 1 MW = 1M USD)
+                  </div>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Section 6: Custom Load Input */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Custom Load Input</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline">Input my own load</Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Custom Load Profile</DialogTitle>
+                  <DialogDescription>
+                    The tool will allow users to submit their own data for load profiles if they have it.
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
+          </CardContent>
+        </Card>
+
+        {/* Section 7: Calculate */}
+        <Card>
+          <CardContent className="pt-6">
+            <Button 
+              onClick={() => setShowResults(true)} 
+              size="lg" 
+              className="w-full md:w-auto"
+            >
+              <Calculator className="mr-2 h-5 w-5" />
+              Calculate
+            </Button>
+          </CardContent>
+        </Card>
+
+        {/* Section 8: Output Area */}
+        {showResults && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Outputs for the day recording the highest peak load in the year</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2">
+                  <img 
+                    src={chartImage} 
+                    alt="Load profile chart showing stacked areas for different equipment types over 24 hours"
+                    className="w-full rounded-lg border"
+                  />
+                </div>
+                <div className="space-y-4">
+                  <div className="bg-muted p-4 rounded-lg">
+                    <div className="text-sm text-muted-foreground">Peak load of terminal</div>
+                    <div className="text-2xl font-bold text-primary">42.5 MW</div>
+                  </div>
+                  <div className="bg-muted p-4 rounded-lg">
+                    <div className="text-sm text-muted-foreground">Energy usage in 24 hours</div>
+                    <div className="text-2xl font-bold text-primary">756 MWh</div>
+                  </div>
+                  <div className="bg-muted p-4 rounded-lg">
+                    <div className="text-sm text-muted-foreground">Peak fluctuation within a day</div>
+                    <div className="text-2xl font-bold text-primary">1.8 GW</div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Notes Section */}
+        <Card className="bg-muted/50">
+          <CardContent className="pt-6">
+            <div className="text-sm space-y-2">
+              <p>
+                <strong>Notes:</strong> Key abbreviations of equipment – Ship to Shore Crane (STS), Rubber-Tired Gantry (RTG), 
+                Automated Stacking Cranes (ASC), Terminal Tractor (TT), Straddle Carriers (SC), Automated Guided Vehicle (AGV), 
+                Reach Stackers (RS).
+              </p>
+              <p>
+                [1] Reach stackers (RS) will only have a depot charging strategy, as it is unlikely they will use a different 
+                charging strategy.
+              </p>
+              <p>
+                [2] In this table when the user changes one percentage the other percentages will immediately adapt.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
