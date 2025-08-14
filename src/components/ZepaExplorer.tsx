@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Calculator, Zap, Battery, Ship, Truck, Settings } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Calculator, Zap, Battery, Ship, Truck, Settings, HelpCircle } from 'lucide-react';
 import LoadProfileChart from './LoadProfileChart';
 
 interface EquipmentData {
@@ -105,36 +106,50 @@ export default function ZepaExplorer() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="bg-primary text-primary-foreground py-12">
-        <div className="container mx-auto px-6 max-w-6xl">
-          <div className="flex items-center gap-3 mb-4">
-            <Zap className="h-8 w-8 text-accent" />
-            <h1 className="text-3xl font-bold">ZEPA Alliance – Port Electrification Explorer</h1>
+    <TooltipProvider>
+      <div className="min-h-screen bg-background">
+        {/* Header */}
+        <header className="bg-primary text-primary-foreground py-12">
+          <div className="container mx-auto px-6 max-w-6xl">
+            <div className="flex items-center gap-3 mb-4">
+              <Zap className="h-8 w-8 text-accent" />
+              <h1 className="text-3xl font-bold">ZEPA Alliance – Port Electrification Explorer</h1>
+            </div>
+            <p className="text-xl mb-4 opacity-90">
+              Accelerating port decarbonization by making battery-electric container handling equipment (BE-CHE) affordable and accessible this decade.
+            </p>
+            <p className="text-lg opacity-80 max-w-4xl">
+              The ZEPA Explorer is a configurable tool to help port stakeholders assess BE-CHE loads, grid feasibility, and electrification strategies.
+            </p>
           </div>
-          <p className="text-xl mb-4 opacity-90">
-            Accelerating port decarbonization by making battery-electric container handling equipment (BE-CHE) affordable and accessible this decade.
-          </p>
-          <p className="text-lg opacity-80 max-w-4xl">
-            The ZEPA Explorer is a configurable tool to help port stakeholders assess BE-CHE loads, grid feasibility, and electrification strategies.
-          </p>
-        </div>
-      </header>
+        </header>
 
-      <div className="container mx-auto px-6 py-8 max-w-6xl space-y-8">
-        
-        {/* Section 1: Terminal Set-up */}
-        <Card>
-          <CardHeader className="bg-primary text-primary-foreground rounded-t-lg">
-            <CardTitle className="flex items-center gap-2">
-              <Settings className="h-5 w-5" />
-              Terminal Set-up
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="space-y-2">
-              <Label htmlFor="archetype">Terminal archetype</Label>
+        <div className="container mx-auto px-6 py-8 max-w-6xl space-y-8">
+          
+          {/* Section 1: Terminal Set-up */}
+          <Card>
+            <CardHeader className="bg-primary text-primary-foreground rounded-t-lg pb-6">
+              <CardTitle className="flex items-center gap-2">
+                <Settings className="h-5 w-5" />
+                Terminal Set-up
+              </CardTitle>
+              <CardDescription className="text-primary-foreground/80 mt-2">
+                Configure basic terminal parameters including archetype, grid capacity, shift schedules, and daily move volumes.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 pt-8">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Label htmlFor="archetype">Terminal archetype</Label>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Detailed instructions and methodology for terminal archetype selection will be provided to give user context.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
               <Select value={terminalArchetype} onValueChange={setTerminalArchetype}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select archetype" />
@@ -145,18 +160,38 @@ export default function ZepaExplorer() {
                   <SelectItem value="sts-agv-rtg">STS & AGV & RTG</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="grid">Grid capacity (MW)</Label>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Label htmlFor="grid">Grid capacity (MW)</Label>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Detailed instructions and methodology for grid capacity determination will be provided to give user context.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
               <Input
                 id="grid"
                 type="number"
                 value={gridCapacity}
                 onChange={(e) => setGridCapacity(Number(e.target.value))}
               />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="schedule">Daily shift schedule</Label>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Label htmlFor="schedule">Daily shift schedule</Label>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Detailed instructions and methodology for shift schedule configuration will be provided to give user context.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
               <Select value={shiftSchedule} onValueChange={setShiftSchedule}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select schedule" />
@@ -166,9 +201,19 @@ export default function ZepaExplorer() {
                   <SelectItem value="16">16 hours</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="moves">Overall moves (TEU/day)</Label>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Label htmlFor="moves">Overall moves (TEU/day)</Label>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Detailed instructions and methodology for daily move calculations will be provided to give user context.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
               <Input
                 id="moves"
                 type="number"
@@ -181,13 +226,16 @@ export default function ZepaExplorer() {
 
         {/* Section 2: Equipment Table */}
         <Card>
-          <CardHeader className="bg-accent text-accent-foreground rounded-t-lg">
+          <CardHeader className="bg-accent text-accent-foreground rounded-t-lg pb-6">
             <CardTitle className="flex items-center gap-2">
               <Truck className="h-5 w-5" />
               Equipment Table
             </CardTitle>
+            <CardDescription className="text-accent-foreground/80 mt-2">
+              Define equipment quantities, electrification levels, and daily operational volumes for both tethered and untethered port equipment.
+            </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-6 pt-8">
             {/* Untethered Equipment */}
             <div>
               <h3 className="font-semibold mb-4 text-lg">Untethered Equipment</h3>
@@ -296,13 +344,16 @@ export default function ZepaExplorer() {
 
         {/* Section 3: Charging Strategies */}
         <Card>
-          <CardHeader className="bg-success text-success-foreground rounded-t-lg">
+          <CardHeader className="bg-success text-success-foreground rounded-t-lg pb-6">
             <CardTitle className="flex items-center gap-2">
               <Battery className="h-5 w-5" />
               Charging Strategies for Untethered Equipment
             </CardTitle>
+            <CardDescription className="text-success-foreground/80 mt-2">
+              Configure charging distribution percentages across depot, rotation, opportunity, and swapping strategies for optimal operations.
+            </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-8">
             <div className="overflow-x-auto">
               <table className="w-full border-collapse">
                 <thead>
@@ -379,17 +430,30 @@ export default function ZepaExplorer() {
 
         {/* Section 4: Other Load Profiles */}
         <Card>
-          <CardHeader className="bg-secondary text-secondary-foreground rounded-t-lg">
+          <CardHeader className="bg-secondary text-secondary-foreground rounded-t-lg pb-6">
             <CardTitle className="flex items-center gap-2">
               <Ship className="h-5 w-5" />
               Other Load Profiles
             </CardTitle>
+            <CardDescription className="text-secondary-foreground/80 mt-2">
+              Add shore power connections and reefer container loads to complete the comprehensive load assessment.
+            </CardDescription>
           </CardHeader>
-          <CardContent className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <CardContent className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 pt-8">
             <div className="space-y-4">
               <h3 className="font-semibold">Shore Power</h3>
               <div className="space-y-2">
-                <Label htmlFor="shore-connections">Number of connections</Label>
+                <div className="flex items-center gap-2">
+                  <Label htmlFor="shore-connections">Number of connections</Label>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Detailed instructions and methodology for shore power connection calculations will be provided to give user context.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
                 <Input
                   id="shore-connections"
                   type="number"
@@ -398,7 +462,17 @@ export default function ZepaExplorer() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="shore-size">Size per connection (MW)</Label>
+                <div className="flex items-center gap-2">
+                  <Label htmlFor="shore-size">Size per connection (MW)</Label>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Detailed instructions and methodology for shore power sizing will be provided to give user context.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
                 <Input
                   id="shore-size"
                   type="number"
@@ -410,9 +484,19 @@ export default function ZepaExplorer() {
             </div>
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="reefers" className="bg-yellow-200 px-2 py-1 rounded">
-                  # reefer containers on ship and in terminal
-                </Label>
+                <div className="flex items-center gap-2">
+                  <Label htmlFor="reefers" className="bg-yellow-200 px-2 py-1 rounded">
+                    # reefer containers on ship and in terminal
+                  </Label>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Detailed instructions and methodology for reefer container load calculations will be provided to give user context.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
                 <Input
                   id="reefers"
                   type="number"
@@ -426,13 +510,16 @@ export default function ZepaExplorer() {
 
         {/* Section 5: BESS System */}
         <Card>
-          <CardHeader className="bg-muted text-muted-foreground rounded-t-lg">
+          <CardHeader className="bg-muted text-muted-foreground rounded-t-lg pb-6">
             <CardTitle className="flex items-center gap-2">
               <Battery className="h-5 w-5" />
               BESS System
             </CardTitle>
+            <CardDescription className="text-muted-foreground/80 mt-2">
+              Optional battery energy storage system configuration to manage peak loads and grid stability requirements.
+            </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 pt-8">
             <div className="flex items-center space-x-2">
               <Checkbox
                 id="bess"
@@ -440,11 +527,29 @@ export default function ZepaExplorer() {
                 onCheckedChange={(checked) => setIncludeBESS(checked === true)}
               />
               <Label htmlFor="bess">Include BESS</Label>
+              <Tooltip>
+                <TooltipTrigger>
+                  <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Detailed instructions and methodology for BESS inclusion will be provided to give user context.</p>
+                </TooltipContent>
+              </Tooltip>
             </div>
             {includeBESS && (
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="bess-size">Size (MW)</Label>
+                  <div className="flex items-center gap-2">
+                    <Label htmlFor="bess-size">Size (MW)</Label>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Detailed instructions and methodology for BESS sizing will be provided to give user context.</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
                   <Input
                     id="bess-size"
                     type="number"
@@ -465,13 +570,16 @@ export default function ZepaExplorer() {
 
         {/* Section 6: Custom Load Input */}
         <Card>
-          <CardHeader className="bg-accent/50 text-accent-foreground rounded-t-lg">
+          <CardHeader className="bg-accent/50 text-accent-foreground rounded-t-lg pb-6">
             <CardTitle className="flex items-center gap-2">
               <Calculator className="h-5 w-5" />
               Custom Load Input
             </CardTitle>
+            <CardDescription className="text-accent-foreground/80 mt-2">
+              Upload your own load profile data if you have specific terminal load measurements or custom requirements.
+            </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-8">
             <Dialog>
               <DialogTrigger asChild>
                 <Button variant="outline">Input my own load</Button>
@@ -551,7 +659,8 @@ export default function ZepaExplorer() {
             </div>
           </CardContent>
         </Card>
+        </div>
       </div>
-    </div>
+    </TooltipProvider>
   );
 }
