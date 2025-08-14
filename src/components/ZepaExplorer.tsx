@@ -143,7 +143,7 @@ export default function ZepaExplorer() {
                   <Label htmlFor="archetype">Terminal archetype</Label>
                   <Tooltip>
                     <TooltipTrigger>
-                      <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                      <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                     </TooltipTrigger>
                     <TooltipContent>
                       <p>Detailed instructions and methodology for terminal archetype selection will be provided to give user context.</p>
@@ -166,7 +166,7 @@ export default function ZepaExplorer() {
                   <Label htmlFor="grid">Grid capacity (MW)</Label>
                   <Tooltip>
                     <TooltipTrigger>
-                      <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                      <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                     </TooltipTrigger>
                     <TooltipContent>
                       <p>Detailed instructions and methodology for grid capacity determination will be provided to give user context.</p>
@@ -185,7 +185,7 @@ export default function ZepaExplorer() {
                   <Label htmlFor="schedule">Daily shift schedule</Label>
                   <Tooltip>
                     <TooltipTrigger>
-                      <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                      <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                     </TooltipTrigger>
                     <TooltipContent>
                       <p>Detailed instructions and methodology for shift schedule configuration will be provided to give user context.</p>
@@ -207,7 +207,7 @@ export default function ZepaExplorer() {
                   <Label htmlFor="moves">Overall moves (TEU/day)</Label>
                   <Tooltip>
                     <TooltipTrigger>
-                      <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                      <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                     </TooltipTrigger>
                     <TooltipContent>
                       <p>Detailed instructions and methodology for daily move calculations will be provided to give user context.</p>
@@ -248,7 +248,7 @@ export default function ZepaExplorer() {
                           Port equipment
                           <Tooltip>
                             <TooltipTrigger>
-                              <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                              <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                             </TooltipTrigger>
                             <TooltipContent>
                               <p>Equipment type abbreviations and specifications will be detailed in methodology section.</p>
@@ -261,7 +261,7 @@ export default function ZepaExplorer() {
                           Number of all equipment
                           <Tooltip>
                             <TooltipTrigger>
-                              <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                              <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                             </TooltipTrigger>
                             <TooltipContent>
                               <p>Total quantity of this equipment type currently operational in the terminal.</p>
@@ -274,7 +274,7 @@ export default function ZepaExplorer() {
                           Number electrified
                           <Tooltip>
                             <TooltipTrigger>
-                              <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                              <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                             </TooltipTrigger>
                             <TooltipContent>
                               <p>Number of electric/battery-powered units planned or currently in operation.</p>
@@ -287,7 +287,7 @@ export default function ZepaExplorer() {
                           % electrified
                           <Tooltip>
                             <TooltipTrigger>
-                              <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                              <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                             </TooltipTrigger>
                             <TooltipContent>
                               <p>Automatically calculated percentage of electrified equipment relative to total fleet.</p>
@@ -300,7 +300,7 @@ export default function ZepaExplorer() {
                           Moves per day per vehicle
                           <Tooltip>
                             <TooltipTrigger>
-                              <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                              <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                             </TooltipTrigger>
                             <TooltipContent>
                               <p>Average daily operational cycles for each unit based on terminal throughput and efficiency.</p>
@@ -360,7 +360,7 @@ export default function ZepaExplorer() {
                           Port equipment
                           <Tooltip>
                             <TooltipTrigger>
-                              <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                              <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                             </TooltipTrigger>
                             <TooltipContent>
                               <p>Equipment type abbreviations and specifications will be detailed in methodology section.</p>
@@ -373,7 +373,7 @@ export default function ZepaExplorer() {
                           Number of all equipment
                           <Tooltip>
                             <TooltipTrigger>
-                              <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                              <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                             </TooltipTrigger>
                             <TooltipContent>
                               <p>Total quantity of this equipment type currently operational in the terminal.</p>
@@ -386,7 +386,7 @@ export default function ZepaExplorer() {
                           Number electrified
                           <Tooltip>
                             <TooltipTrigger>
-                              <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                              <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                             </TooltipTrigger>
                             <TooltipContent>
                               <p>Number of electric/battery-powered units planned or currently in operation.</p>
@@ -399,7 +399,7 @@ export default function ZepaExplorer() {
                           % electrified
                           <Tooltip>
                             <TooltipTrigger>
-                              <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                              <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                             </TooltipTrigger>
                             <TooltipContent>
                               <p>Automatically calculated percentage of electrified equipment relative to total fleet.</p>
@@ -412,7 +412,7 @@ export default function ZepaExplorer() {
                           Moves per day per vehicle
                           <Tooltip>
                             <TooltipTrigger>
-                              <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                              <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                             </TooltipTrigger>
                             <TooltipContent>
                               <p>Average daily operational cycles for each unit based on terminal throughput and efficiency.</p>
@@ -483,7 +483,7 @@ export default function ZepaExplorer() {
                         Equipment
                         <Tooltip>
                           <TooltipTrigger>
-                            <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                            <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                           </TooltipTrigger>
                           <TooltipContent>
                             <p>Equipment type abbreviations and specifications will be detailed in methodology section.</p>
@@ -496,7 +496,7 @@ export default function ZepaExplorer() {
                         Depot charging (%)
                         <Tooltip>
                           <TooltipTrigger>
-                            <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                            <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                           </TooltipTrigger>
                           <TooltipContent>
                             <p>Percentage of fleet charged at central depot facilities during off-shift hours.</p>
@@ -509,7 +509,7 @@ export default function ZepaExplorer() {
                         Vehicle rotation (%)
                         <Tooltip>
                           <TooltipTrigger>
-                            <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                            <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                           </TooltipTrigger>
                           <TooltipContent>
                             <p>Percentage requiring vehicle rotation strategy due to battery limitations.</p>
@@ -522,7 +522,7 @@ export default function ZepaExplorer() {
                         Opportunity charging (%)
                         <Tooltip>
                           <TooltipTrigger>
-                            <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                            <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                           </TooltipTrigger>
                           <TooltipContent>
                             <p>Percentage utilizing quick charging during operational breaks and waiting periods.</p>
@@ -535,7 +535,7 @@ export default function ZepaExplorer() {
                         Battery swapping (%)
                         <Tooltip>
                           <TooltipTrigger>
-                            <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                            <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                           </TooltipTrigger>
                           <TooltipContent>
                             <p>Percentage using automated battery swapping systems for continuous operation.</p>
@@ -548,7 +548,7 @@ export default function ZepaExplorer() {
                         Extra vehicles
                         <Tooltip>
                           <TooltipTrigger>
-                            <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                            <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                           </TooltipTrigger>
                           <TooltipContent>
                             <p>Additional vehicles needed for rotation strategy calculated from charging requirements.</p>
@@ -561,7 +561,7 @@ export default function ZepaExplorer() {
                         Number of chargers
                         <Tooltip>
                           <TooltipTrigger>
-                            <HelpCircle className="h-3 w-3 text-muted-foreground" />
+                            <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                           </TooltipTrigger>
                           <TooltipContent>
                             <p>Total charging infrastructure units required based on fleet size and charging strategy.</p>
@@ -651,7 +651,7 @@ export default function ZepaExplorer() {
                   <Label htmlFor="shore-connections">Number of connections</Label>
                   <Tooltip>
                     <TooltipTrigger>
-                      <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                      <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                     </TooltipTrigger>
                     <TooltipContent>
                       <p>Detailed instructions and methodology for shore power connection calculations will be provided to give user context.</p>
@@ -670,7 +670,7 @@ export default function ZepaExplorer() {
                   <Label htmlFor="shore-size">Size per connection (MW)</Label>
                   <Tooltip>
                     <TooltipTrigger>
-                      <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                      <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                     </TooltipTrigger>
                     <TooltipContent>
                       <p>Detailed instructions and methodology for shore power sizing will be provided to give user context.</p>
@@ -694,7 +694,7 @@ export default function ZepaExplorer() {
                   </Label>
                   <Tooltip>
                     <TooltipTrigger>
-                      <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                      <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                     </TooltipTrigger>
                     <TooltipContent>
                       <p>Detailed instructions and methodology for reefer container load calculations will be provided to give user context.</p>
@@ -733,7 +733,7 @@ export default function ZepaExplorer() {
               <Label htmlFor="bess">Include BESS</Label>
               <Tooltip>
                 <TooltipTrigger>
-                  <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                  <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Detailed instructions and methodology for BESS inclusion will be provided to give user context.</p>
@@ -747,7 +747,7 @@ export default function ZepaExplorer() {
                     <Label htmlFor="bess-size">Size (MW)</Label>
                     <Tooltip>
                       <TooltipTrigger>
-                        <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                        <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
                       </TooltipTrigger>
                       <TooltipContent>
                         <p>Detailed instructions and methodology for BESS sizing will be provided to give user context.</p>
