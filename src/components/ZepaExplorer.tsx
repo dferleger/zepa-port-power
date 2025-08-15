@@ -704,7 +704,7 @@ export default function ZepaExplorer() {
               Add shore power connections and reefer container loads to complete the comprehensive load assessment.
             </CardDescription>
           </CardHeader>
-          <CardContent className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 pt-8">
+          <CardContent className="grid md:grid-cols-2 gap-6 pt-8">
             <div className="space-y-4">
               <h3 className="font-semibold">Shore Power</h3>
               <div className="space-y-2">
@@ -748,9 +748,10 @@ export default function ZepaExplorer() {
               </div>
             </div>
             <div className="space-y-4">
+              <h3 className="font-semibold">Reefer Containers</h3>
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <Label htmlFor="reefers" className="rounded">
+                  <Label htmlFor="reefers">
                     Number of reefer containers on ship and in terminal
                   </Label>
                   <Tooltip>
