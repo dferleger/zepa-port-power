@@ -884,6 +884,7 @@ export default function ZepaExplorer() {
               <CardTitle>Outputs for the day recording the highest peak load in the year</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
+              <div className="text-sm text-muted-foreground mb-4">Time - data in 15 minute intervals</div>
               <div className="grid lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
                   <LoadProfileChart />
