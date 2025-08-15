@@ -805,7 +805,7 @@ export default function ZepaExplorer() {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
-                    <Label htmlFor="bess-size">Size (MW)</Label>
+                    <Label htmlFor="bess-size">Size (MWh)</Label>
                     <Tooltip>
                       <TooltipTrigger>
                         <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
