@@ -71,7 +71,7 @@ export default function ZepaExplorer() {
   const [shorePowerSize, setShorePowerSize] = useState(10);
   const [reeferContainers, setReeferContainers] = useState(1000);
   const [includeBESS, setIncludeBESS] = useState(false);
-  const [bessSize, setBessSize] = useState(5);
+  const [bessSize, setBessSize] = useState(10);
   
   const [showResults, setShowResults] = useState(false);
 
@@ -825,7 +825,7 @@ export default function ZepaExplorer() {
                 <div className="space-y-2">
                   <Label>Estimated Cost</Label>
                   <div className="p-3 bg-muted rounded text-sm">
-                    ${bessSize}M USD (estimate: 1 MW = 1M USD)
+                    ${bessSize/2}M USD (estimate: 1 MWh = .5M USD)
                   </div>
                 </div>
               </div>
