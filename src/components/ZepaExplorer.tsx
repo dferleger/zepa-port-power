@@ -138,14 +138,14 @@ export default function ZepaExplorer() {
   const calculateExtraVehicles = (equipment: EquipmentData, strategies: ChargingStrategy) => {
     // Simplified calculation for demo
     const rotationFactor = strategies.rotation * 0.01 * 0.2;
-    return 7;
+    return Math.round(equipment.electrified * rotationFactor);
   };
 
   const calculateChargers = (equipment: EquipmentData, strategies: ChargingStrategy) => {
     // Simplified calculation for demo
     const depotFactor = strategies.depot * 0.01 * 0.3;
     const opportunityFactor = strategies.opportunity * 0.01 * 0.5;
-    return 8;
+    return Math.round(equipment.electrified * (depotFactor + opportunityFactor));
   };
 
   return (
