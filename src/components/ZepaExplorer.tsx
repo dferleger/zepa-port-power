@@ -67,7 +67,7 @@ export default function ZepaExplorer() {
   });
 
   // Other inputs
-  const [shorePowerConnections, setShorePowerConnections] = useState(4);
+  const [shorePowerConnections, setShorePowerConnections] = useState(3);
   const [shorePowerSize, setShorePowerSize] = useState(10);
   const [reeferContainers, setReeferContainers] = useState(1000);
   const [includeBESS, setIncludeBESS] = useState(false);
