@@ -195,7 +195,7 @@ export default function ZepaExplorer() {
             <CardHeader className="bg-primary text-primary-foreground rounded-t-lg pb-6">
               <CardTitle className="flex items-center gap-2">
                 <Settings className="h-5 w-5" />
-                Terminal Set-up
+                Port (arche)type
               </CardTitle>
               <CardDescription className="text-primary-foreground/80 mt-2">
                 Configure basic terminal parameters including archetype, grid capacity, shift schedules, and daily move volumes.
@@ -293,7 +293,7 @@ export default function ZepaExplorer() {
           <CardHeader className="bg-accent text-accent-foreground rounded-t-lg pb-6">
             <CardTitle className="flex items-center gap-2">
               <Truck className="h-5 w-5" />
-              Equipment Table
+              Equipment Electrification Set-Up
             </CardTitle>
             <CardDescription className="text-accent-foreground/80 mt-2">
               Define equipment quantities, electrification levels, and daily operational volumes for both tethered and untethered port equipment.
@@ -528,7 +528,7 @@ export default function ZepaExplorer() {
           <CardHeader className="bg-success text-success-foreground rounded-t-lg pb-6">
             <CardTitle className="flex items-center gap-2">
               <Battery className="h-5 w-5" />
-              Charging Strategies for Untethered Equipment
+              Charging Strategy
             </CardTitle>
             <CardDescription className="text-success-foreground/80 mt-2">
               Configure charging distribution percentages across depot, rotation, opportunity, and swapping strategies for optimal operations.
@@ -606,7 +606,7 @@ export default function ZepaExplorer() {
                     </th>
                     <th className="text-left p-3 font-medium">
                       <div className="flex items-center gap-2">
-                        Extra vehicles
+                        Calculated extra vehicles
                         <Tooltip>
                           <TooltipTrigger>
                             <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
@@ -619,7 +619,7 @@ export default function ZepaExplorer() {
                     </th>
                     <th className="text-left p-3 font-medium">
                       <div className="flex items-center gap-2">
-                        Number of chargers
+                        Calculated number of chargers
                         <Tooltip>
                           <TooltipTrigger>
                             <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
@@ -855,7 +855,7 @@ export default function ZepaExplorer() {
                 <DialogHeader>
                   <DialogTitle>Custom Load Profile</DialogTitle>
                   <DialogDescription>
-                    The tool will allow users to submit their own data for load profiles if they have it.
+                    The tool will allow users to submit their own data for load profiles if they have it. A template excel will be provided.
                   </DialogDescription>
                 </DialogHeader>
               </DialogContent>
