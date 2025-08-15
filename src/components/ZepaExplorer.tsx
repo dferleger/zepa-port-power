@@ -802,9 +802,9 @@ export default function ZepaExplorer() {
               </Tooltip>
             </div>
             {includeBESS && (
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid md:grid-cols-2 gap-4 items-start">
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 h-6">
                     <Label htmlFor="bess-size">Size (MWh)</Label>
                     <Tooltip>
                       <TooltipTrigger>
@@ -823,8 +823,10 @@ export default function ZepaExplorer() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>Estimated Cost</Label>
-                  <div className="p-3 bg-muted rounded text-sm">
+                  <div className="h-6 flex items-center">
+                    <Label>Estimated Cost</Label>
+                  </div>
+                  <div className="p-3 bg-muted rounded text-sm h-10 flex items-center">
                     ${bessSize/2}M USD (estimate: 1 MWh = .5M USD)
                   </div>
                 </div>
