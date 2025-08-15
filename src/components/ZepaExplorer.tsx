@@ -44,6 +44,20 @@ export default function ZepaExplorer() {
     { name: 'ASC', total: 10, electrified: 8, movesPerDay: 60 },
   ]);
 
+  // Equipment row enable/disable state
+  const [enabledUntetheredRows, setEnabledUntetheredRows] = useState<{[key: string]: boolean}>({
+    'TT': true,
+    'SC': true,
+    'AGV': true,
+    'RS': true,
+  });
+  
+  const [enabledTetheredRows, setEnabledTetheredRows] = useState<{[key: string]: boolean}>({
+    'STS': true,
+    'RTG': true,
+    'ASC': true,
+  });
+
   // Charging strategies
   const [chargingStrategies, setChargingStrategies] = useState<{[key: string]: ChargingStrategy}>({
     TT: { depot: 60, rotation: 25, opportunity: 15, swapping: 0 },
@@ -264,6 +278,7 @@ export default function ZepaExplorer() {
                 <table className="w-full border-collapse">
                   <thead>
                     <tr className="border-b">
+                      <th className="text-left p-3 font-medium w-16">Enable</th>
                       <th className="text-left p-3 font-medium">
                         <div className="flex items-center gap-2">
                           Port equipment
@@ -332,38 +347,55 @@ export default function ZepaExplorer() {
                     </tr>
                   </thead>
                   <tbody>
-                    {untetheredEquipment.map((equipment, index) => (
-                      <tr key={equipment.name} className="border-b bg-muted/30">
-                        <td className="p-3 font-medium">{equipment.name}</td>
-                        <td className="p-3">
-                          <Input
-                            type="number"
-                            value={equipment.total}
-                            onChange={(e) => updateEquipmentElectrified(untetheredEquipment, setUntetheredEquipment, index, 'total', Number(e.target.value))}
-                            className="w-20"
-                          />
-                        </td>
-                        <td className="p-3">
-                          <Input
-                            type="number"
-                            value={equipment.electrified}
-                            onChange={(e) => updateEquipmentElectrified(untetheredEquipment, setUntetheredEquipment, index, 'electrified', Number(e.target.value))}
-                            className="w-20"
-                          />
-                        </td>
-                        <td className="p-3 font-medium text-primary">
-                          {equipment.total > 0 ? Math.round((equipment.electrified / equipment.total) * 100) : 0}%
-                        </td>
-                        <td className="p-3">
-                          <Input
-                            type="number"
-                            value={equipment.movesPerDay}
-                            onChange={(e) => updateEquipmentElectrified(untetheredEquipment, setUntetheredEquipment, index, 'movesPerDay', Number(e.target.value))}
-                            className="w-20"
-                          />
-                        </td>
-                      </tr>
-                    ))}
+                    {untetheredEquipment.map((equipment, index) => {
+                      const isEnabled = enabledUntetheredRows[equipment.name];
+                      return (
+                        <tr key={equipment.name} className={`border-b ${isEnabled ? 'bg-muted/30' : 'bg-muted/10 opacity-50'}`}>
+                          <td className="p-3">
+                            <Checkbox
+                              checked={isEnabled}
+                              onCheckedChange={(checked) => 
+                                setEnabledUntetheredRows(prev => ({ ...prev, [equipment.name]: checked as boolean }))
+                              }
+                            />
+                          </td>
+                          <td className="p-3 font-medium">{equipment.name}</td>
+                          <td className="p-3">
+                            <Input
+                              type="number"
+                              value={isEnabled ? equipment.total : ''}
+                              onChange={(e) => updateEquipmentElectrified(untetheredEquipment, setUntetheredEquipment, index, 'total', Number(e.target.value))}
+                              className="w-20"
+                              disabled={!isEnabled}
+                              placeholder={!isEnabled ? '0' : ''}
+                            />
+                          </td>
+                          <td className="p-3">
+                            <Input
+                              type="number"
+                              value={isEnabled ? equipment.electrified : ''}
+                              onChange={(e) => updateEquipmentElectrified(untetheredEquipment, setUntetheredEquipment, index, 'electrified', Number(e.target.value))}
+                              className="w-20"
+                              disabled={!isEnabled}
+                              placeholder={!isEnabled ? '0' : ''}
+                            />
+                          </td>
+                          <td className="p-3 font-medium text-primary">
+                            {isEnabled && equipment.total > 0 ? Math.round((equipment.electrified / equipment.total) * 100) : 0}%
+                          </td>
+                          <td className="p-3">
+                            <Input
+                              type="number"
+                              value={isEnabled ? equipment.movesPerDay : ''}
+                              onChange={(e) => updateEquipmentElectrified(untetheredEquipment, setUntetheredEquipment, index, 'movesPerDay', Number(e.target.value))}
+                              className="w-20"
+                              disabled={!isEnabled}
+                              placeholder={!isEnabled ? '0' : ''}
+                            />
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -376,6 +408,7 @@ export default function ZepaExplorer() {
                 <table className="w-full border-collapse">
                   <thead>
                     <tr className="border-b">
+                      <th className="text-left p-3 font-medium w-16">Enable</th>
                       <th className="text-left p-3 font-medium">
                         <div className="flex items-center gap-2">
                           Port equipment
@@ -444,38 +477,55 @@ export default function ZepaExplorer() {
                     </tr>
                   </thead>
                   <tbody>
-                    {tetheredEquipment.map((equipment, index) => (
-                      <tr key={equipment.name} className="border-b bg-muted/30">
-                        <td className="p-3 font-medium">{equipment.name}</td>
-                        <td className="p-3">
-                          <Input
-                            type="number"
-                            value={equipment.total}
-                            onChange={(e) => updateEquipmentElectrified(tetheredEquipment, setTetheredEquipment, index, 'total', Number(e.target.value))}
-                            className="w-20"
-                          />
-                        </td>
-                        <td className="p-3">
-                          <Input
-                            type="number"
-                            value={equipment.electrified}
-                            onChange={(e) => updateEquipmentElectrified(tetheredEquipment, setTetheredEquipment, index, 'electrified', Number(e.target.value))}
-                            className="w-20"
-                          />
-                        </td>
-                        <td className="p-3 font-medium text-primary">
-                          {equipment.total > 0 ? Math.round((equipment.electrified / equipment.total) * 100) : 0}%
-                        </td>
-                        <td className="p-3">
-                          <Input
-                            type="number"
-                            value={equipment.movesPerDay}
-                            onChange={(e) => updateEquipmentElectrified(tetheredEquipment, setTetheredEquipment, index, 'movesPerDay', Number(e.target.value))}
-                            className="w-20"
-                          />
-                        </td>
-                      </tr>
-                    ))}
+                    {tetheredEquipment.map((equipment, index) => {
+                      const isEnabled = enabledTetheredRows[equipment.name];
+                      return (
+                        <tr key={equipment.name} className={`border-b ${isEnabled ? 'bg-muted/30' : 'bg-muted/10 opacity-50'}`}>
+                          <td className="p-3">
+                            <Checkbox
+                              checked={isEnabled}
+                              onCheckedChange={(checked) => 
+                                setEnabledTetheredRows(prev => ({ ...prev, [equipment.name]: checked as boolean }))
+                              }
+                            />
+                          </td>
+                          <td className="p-3 font-medium">{equipment.name}</td>
+                          <td className="p-3">
+                            <Input
+                              type="number"
+                              value={isEnabled ? equipment.total : ''}
+                              onChange={(e) => updateEquipmentElectrified(tetheredEquipment, setTetheredEquipment, index, 'total', Number(e.target.value))}
+                              className="w-20"
+                              disabled={!isEnabled}
+                              placeholder={!isEnabled ? '0' : ''}
+                            />
+                          </td>
+                          <td className="p-3">
+                            <Input
+                              type="number"
+                              value={isEnabled ? equipment.electrified : ''}
+                              onChange={(e) => updateEquipmentElectrified(tetheredEquipment, setTetheredEquipment, index, 'electrified', Number(e.target.value))}
+                              className="w-20"
+                              disabled={!isEnabled}
+                              placeholder={!isEnabled ? '0' : ''}
+                            />
+                          </td>
+                          <td className="p-3 font-medium text-primary">
+                            {isEnabled && equipment.total > 0 ? Math.round((equipment.electrified / equipment.total) * 100) : 0}%
+                          </td>
+                          <td className="p-3">
+                            <Input
+                              type="number"
+                              value={isEnabled ? equipment.movesPerDay : ''}
+                              onChange={(e) => updateEquipmentElectrified(tetheredEquipment, setTetheredEquipment, index, 'movesPerDay', Number(e.target.value))}
+                              className="w-20"
+                              disabled={!isEnabled}
+                              placeholder={!isEnabled ? '0' : ''}
+                            />
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
