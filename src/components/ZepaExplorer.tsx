@@ -26,22 +26,22 @@ interface ChargingStrategy {
 
 export default function ZepaExplorer() {
   const [terminalArchetype, setTerminalArchetype] = useState('');
-  const [gridCapacity, setGridCapacity] = useState(45);
+  const [gridCapacity, setGridCapacity] = useState(52);
   const [shiftSchedule, setShiftSchedule] = useState('');
-  const [overallMoves, setOverallMoves] = useState(8000);
+  const [overallMoves, setOverallMoves] = useState(10000);
   
   // Equipment data
   const [untetheredEquipment, setUntetheredEquipment] = useState<EquipmentData[]>([
-    { name: 'TT', total: 20, electrified: 15, movesPerDay: 50 },
-    { name: 'SC', total: 8, electrified: 6, movesPerDay: 80 },
-    { name: 'AGV', total: 12, electrified: 10, movesPerDay: 60 },
-    { name: 'RS', total: 4, electrified: 2, movesPerDay: 30 },
+    { name: 'TT', total: 0, electrified: 0, movesPerDay: 0 },
+    { name: 'SC', total: 80, electrified: 60, movesPerDay: 190 },
+    { name: 'AGV', total: 0, electrified: 0, movesPerDay: 0 },
+    { name: 'RS', total: 0, electrified: 0, movesPerDay: 0 },
   ]);
   
   const [tetheredEquipment, setTetheredEquipment] = useState<EquipmentData[]>([
-    { name: 'STS', total: 6, electrified: 4, movesPerDay: 200 },
-    { name: 'RTG', total: 15, electrified: 12, movesPerDay: 40 },
-    { name: 'ASC', total: 10, electrified: 8, movesPerDay: 60 },
+    { name: 'STS', total: 20, electrified: 20, movesPerDay: 420 },
+    { name: 'RTG', total: 0, electrified: 0, movesPerDay: 0 },
+    { name: 'ASC', total: 20, electrified: 20, movesPerDay: 420 },
   ]);
 
   // Equipment row enable/disable state
