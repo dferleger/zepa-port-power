@@ -886,7 +886,10 @@ export default function ZepaExplorer() {
             <CardContent className="space-y-6">
               <div className="grid lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
-                  <LoadProfileChart />
+                  <div className="space-y-3">
+                    <h3 className="text-sm text-muted-foreground font-medium">Time - data in 15 minute intervals</h3>
+                    <LoadProfileChart />
+                  </div>
                 </div>
                 <div className="space-y-4">
                   <div className="bg-muted p-4 rounded-lg">
