@@ -906,7 +906,7 @@ export default function ZepaExplorer() {
                   </div>
                 </div>
               </div>
-              <Button className="w-full bg-slate-700 hover:bg-slate-800 text-white">
+              <Button className="w-full text-white" style={{ backgroundColor: '#001160' }}>
                 Click to export inputs and outputs
               </Button>
             </CardContent>
