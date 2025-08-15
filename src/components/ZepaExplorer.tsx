@@ -307,7 +307,7 @@ export default function ZepaExplorer() {
                 <table className="w-full border-collapse">
                   <thead>
                     <tr className="border-b">
-                      <th className="text-left p-3 font-medium w-16">Enable</th>
+                      <th className="text-left p-3 font-medium w-16"></th>
                       <th className="text-left p-3 font-medium">
                         <div className="flex items-center gap-2">
                           Port equipment
@@ -437,7 +437,7 @@ export default function ZepaExplorer() {
                 <table className="w-full border-collapse">
                   <thead>
                     <tr className="border-b">
-                      <th className="text-left p-3 font-medium w-16">Enable</th>
+                      <th className="text-left p-3 font-medium w-16"></th>
                       <th className="text-left p-3 font-medium">
                         <div className="flex items-center gap-2">
                           Port equipment
