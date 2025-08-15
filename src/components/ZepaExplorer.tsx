@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -74,6 +74,35 @@ export default function ZepaExplorer() {
   const [bessSize, setBessSize] = useState(5);
   
   const [showResults, setShowResults] = useState(false);
+
+  // Archetype to equipment mapping
+  const archetypeMapping = {
+    'sts-tt-rtg': {
+      untethered: { TT: true, SC: false, AGV: false, RS: false },
+      tethered: { STS: true, RTG: true, ASC: false }
+    },
+    'sts-asc-sc': {
+      untethered: { TT: false, SC: true, AGV: false, RS: false },
+      tethered: { STS: true, RTG: false, ASC: true }
+    },
+    'sts-agv-rtg': {
+      untethered: { TT: false, SC: false, AGV: true, RS: false },
+      tethered: { STS: true, RTG: true, ASC: false }
+    }
+  };
+
+  // Update equipment checkboxes when archetype changes
+  useEffect(() => {
+    if (terminalArchetype && archetypeMapping[terminalArchetype as keyof typeof archetypeMapping]) {
+      const mapping = archetypeMapping[terminalArchetype as keyof typeof archetypeMapping];
+      
+      // Update untethered equipment checkboxes
+      setEnabledUntetheredRows(mapping.untethered);
+      
+      // Update tethered equipment checkboxes
+      setEnabledTetheredRows(mapping.tethered);
+    }
+  }, [terminalArchetype]);
 
   const updateEquipmentElectrified = (
     equipment: EquipmentData[], 
