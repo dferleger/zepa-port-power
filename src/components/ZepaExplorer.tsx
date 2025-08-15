@@ -466,32 +466,6 @@ export default function ZepaExplorer() {
                       </th>
                       <th className="text-left p-3 font-medium">
                         <div className="flex items-center gap-2">
-                          Number electrified
-                          <Tooltip>
-                            <TooltipTrigger>
-                              <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Number of electric/battery-powered units planned or currently in operation.</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </div>
-                      </th>
-                      <th className="text-left p-3 font-medium">
-                        <div className="flex items-center gap-2">
-                          % electrified
-                          <Tooltip>
-                            <TooltipTrigger>
-                              <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Automatically calculated percentage of electrified equipment relative to total fleet.</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </div>
-                      </th>
-                      <th className="text-left p-3 font-medium">
-                        <div className="flex items-center gap-2">
                           Moves per day per vehicle
                           <Tooltip>
                             <TooltipTrigger>
@@ -528,19 +502,6 @@ export default function ZepaExplorer() {
                               disabled={!isEnabled}
                               placeholder={!isEnabled ? '0' : ''}
                             />
-                          </td>
-                          <td className="p-3">
-                            <Input
-                              type="number"
-                              value={isEnabled ? equipment.electrified : ''}
-                              onChange={(e) => updateEquipmentElectrified(tetheredEquipment, setTetheredEquipment, index, 'electrified', Number(e.target.value))}
-                              className="w-20"
-                              disabled={!isEnabled}
-                              placeholder={!isEnabled ? '0' : ''}
-                            />
-                          </td>
-                          <td className="p-3 font-medium text-primary">
-                            {isEnabled && equipment.total > 0 ? Math.round((equipment.electrified / equipment.total) * 100) : 0}%
                           </td>
                           <td className="p-3">
                             <Input
