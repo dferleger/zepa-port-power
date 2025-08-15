@@ -25,7 +25,7 @@ interface ChargingStrategy {
 }
 
 export default function ZepaExplorer() {
-  const [terminalArchetype, setTerminalArchetype] = useState('');
+  const [terminalArchetype, setTerminalArchetype] = useState(''sts-asc-sc');
   const [gridCapacity, setGridCapacity] = useState(52);
   const [shiftSchedule, setShiftSchedule] = useState('');
   const [overallMoves, setOverallMoves] = useState(10000);
