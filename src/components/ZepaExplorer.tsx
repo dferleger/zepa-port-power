@@ -60,9 +60,9 @@ export default function ZepaExplorer() {
 
   // Charging strategies
   const [chargingStrategies, setChargingStrategies] = useState<{[key: string]: ChargingStrategy}>({
-    TT: { depot: 60, rotation: 25, opportunity: 15, swapping: 0 },
-    SC: { depot: 50, rotation: 30, opportunity: 20, swapping: 0 },
-    AGV: { depot: 40, rotation: 35, opportunity: 25, swapping: 0 },
+    TT: { depot: 0, rotation: 0, opportunity: 0, swapping: 0 },
+    SC: { depot: 0, rotation: 80, opportunity: 20, swapping: 0 },
+    AGV: { depot: 0, rotation: 0, opportunity: 0, swapping: 0 },
     RS: { depot: 100, rotation: 0, opportunity: 0, swapping: 0 },
   });
 
