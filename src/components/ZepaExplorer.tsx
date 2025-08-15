@@ -891,15 +891,15 @@ export default function ZepaExplorer() {
                 <div className="space-y-4">
                   <div className="bg-muted p-4 rounded-lg">
                     <div className="text-sm text-muted-foreground">Peak load of terminal</div>
-                    <div className="text-2xl font-bold text-primary">42.5 MW</div>
+                    <div className="text-2xl font-bold text-primary">55 MW</div>
                   </div>
                   <div className="bg-muted p-4 rounded-lg">
                     <div className="text-sm text-muted-foreground">Energy usage in 24 hours</div>
-                    <div className="text-2xl font-bold text-primary">756 MWh</div>
+                    <div className="text-2xl font-bold text-primary">X MWh</div>
                   </div>
                   <div className="bg-muted p-4 rounded-lg">
                     <div className="text-sm text-muted-foreground">Peak fluctuation within a day</div>
-                    <div className="text-2xl font-bold text-primary">1.8 GW</div>
+                    <div className="text-2xl font-bold text-primary">X MW</div>
                   </div>
                 </div>
               </div>
