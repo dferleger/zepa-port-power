@@ -781,7 +781,7 @@ export default function ZepaExplorer() {
               <Battery className="h-5 w-5" />
               BESS System
             </CardTitle>
-            <CardDescription className="text-muted-foreground/80 mt-2">
+            <CardDescription className="text-secondary-foreground/80 mt-2">
               Optional battery energy storage system configuration to manage peak loads and grid stability requirements.
             </CardDescription>
           </CardHeader>
