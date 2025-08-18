@@ -290,7 +290,7 @@ export default function ZepaExplorer() {
 
         {/* Section 2: Equipment Table */}
         <Card>
-          <CardHeader className="bg-accent text-accent-foreground rounded-t-lg pb-6">
+          <CardHeader className="bg-success text-success-foreground rounded-t-lg pb-6">
             <CardTitle className="flex items-center gap-2">
               <Truck className="h-5 w-5" />
               Equipment Electrification Set-Up
@@ -776,7 +776,7 @@ export default function ZepaExplorer() {
 
         {/* Section 5: BESS System */}
         <Card>
-          <CardHeader className="bg-muted text-muted-foreground rounded-t-lg pb-6">
+          <CardHeader className="bg-secondary text-secondary-foreground rounded-t-lg pb-6">
             <CardTitle className="flex items-center gap-2">
               <Battery className="h-5 w-5" />
               BESS System
