@@ -163,6 +163,11 @@ const LoadProfileChart: React.FC = () => {
               bottom: 60,
             }}
           >
+            <defs>
+              <pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="4" height="4">
+                <path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2" style={{stroke: '#DDA0DD', strokeWidth: 1}} />
+              </pattern>
+            </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" />
             <XAxis 
               dataKey="time" 
@@ -269,15 +274,15 @@ const LoadProfileChart: React.FC = () => {
               name={equipmentLabels.bessCharge}
             />
             
-            {/* BESS Discharge - Transparent overlay with separate stackId */}
+            {/* BESS Discharge - Hashed pattern on top of stack to show subtraction */}
             <Area 
               type="monotone" 
               dataKey="bessDischarge" 
-              stackId="overlay"
+              stackId="1"
               stroke={equipmentColors.bessDischarge} 
-              fill={equipmentColors.bessDischarge}
-              fillOpacity={0.4}
-              strokeWidth={1}
+              fill="url(#diagonalHatch)"
+              fillOpacity={0.8}
+              strokeWidth={2}
               name={equipmentLabels.bessDischarge}
             />
           </AreaChart>
