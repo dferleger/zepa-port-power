@@ -71,7 +71,7 @@ export default function ZepaExplorer() {
   const [shorePowerSize, setShorePowerSize] = useState(10);
   const [reeferContainers, setReeferContainers] = useState(1000);
   const [terminalLighting, setTerminalLighting] = useState(1.3);
-  const [includeBESS, setIncludeBESS] = useState(false);
+  const [includeBESS, setIncludeBESS] = useState(true);
   const [bessSize, setBessSize] = useState(10);
   
   const [showResults, setShowResults] = useState(false);
