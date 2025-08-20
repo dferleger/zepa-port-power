@@ -79,30 +79,30 @@ export default function ZepaExplorer() {
   // Generate load data for calculations (same logic as in LoadProfileChart)
   const generateLoadData = () => {
     const hourlyData = [
-      { sc: 1, sts: 3, asc: 1, shorePower: 27, reefers: 4.42, lights: 1.3 },
-      { sc: 2, sts: 1, asc: 3, shorePower: 28, reefers: 4.47, lights: 1.3 },
-      { sc: 2, sts: 2, asc: 2, shorePower: 23, reefers: 4.24, lights: 1.3 },
-      { sc: 0, sts: 3, asc: 0, shorePower: 29, reefers: 4.16, lights: 1.3 },
-      { sc: 0, sts: 5, asc: 1, shorePower: 23, reefers: 4.45, lights: 1.3 },
-      { sc: 1, sts: 4, asc: 4, shorePower: 23, reefers: 4.59, lights: 1.3 },
-      { sc: 3, sts: 5, asc: 1, shorePower: 25, reefers: 4.21, lights: 1.3 },
-      { sc: 4, sts: 1, asc: 4, shorePower: 27, reefers: 4.2, lights: 1.3 },
-      { sc: 0, sts: 2, asc: 3, shorePower: 30, reefers: 4.86, lights: 0 },
-      { sc: 3, sts: 2, asc: 1, shorePower: 30, reefers: 4.65, lights: 0 },
-      { sc: 0, sts: 4, asc: 4, shorePower: 23, reefers: 4.03, lights: 0 },
-      { sc: 2, sts: 5, asc: 2, shorePower: 26, reefers: 4.83, lights: 0 },
-      { sc: 1, sts: 3, asc: 3, shorePower: 29, reefers: 5, lights: 0 },
-      { sc: 4, sts: 0, asc: 0, shorePower: 21, reefers: 4.69, lights: 0 },
-      { sc: 2, sts: 1, asc: 2, shorePower: 28, reefers: 4.83, lights: 0 },
-      { sc: 2, sts: 3, asc: 0, shorePower: 28, reefers: 4.92, lights: 0 },
-      { sc: 2, sts: 5, asc: 2, shorePower: 24, reefers: 4.77, lights: 0 },
-      { sc: 3, sts: 1, asc: 2, shorePower: 24, reefers: 4.13, lights: 0 },
-      { sc: 0, sts: 3, asc: 3, shorePower: 23, reefers: 4.16, lights: 0 },
-      { sc: 2, sts: 5, asc: 3, shorePower: 26, reefers: 4.71, lights: 1.3 },
-      { sc: 4, sts: 4, asc: 4, shorePower: 26, reefers: 4.81, lights: 1.3 },
-      { sc: 1, sts: 5, asc: 0, shorePower: 24, reefers: 4.41, lights: 1.3 },
-      { sc: 3, sts: 5, asc: 1, shorePower: 21, reefers: 4.03, lights: 1.3 },
-      { sc: 2, sts: 4, asc: 3, shorePower: 27, reefers: 4.28, lights: 1.3 },
+      { sc: 1, sts: 3, asc: 1, shorePower: 27, reefers: 4.42, lights: 1.3, bessCharge: 0.28 },
+      { sc: 2, sts: 1, asc: 3, shorePower: 28, reefers: 4.47, lights: 1.3, bessCharge: 0 },
+      { sc: 2, sts: 2, asc: 2, shorePower: 23, reefers: 4.24, lights: 1.3, bessCharge: 3.46 },
+      { sc: 0, sts: 3, asc: 0, shorePower: 29, reefers: 4.16, lights: 1.3, bessCharge: 0.54 },
+      { sc: 0, sts: 5, asc: 1, shorePower: 23, reefers: 4.45, lights: 1.3, bessCharge: 3.25 },
+      { sc: 1, sts: 4, asc: 4, shorePower: 23, reefers: 4.59, lights: 1.3, bessCharge: 0.11 },
+      { sc: 3, sts: 5, asc: 1, shorePower: 25, reefers: 4.21, lights: 1.3, bessCharge: 0 },
+      { sc: 4, sts: 1, asc: 4, shorePower: 27, reefers: 4.2, lights: 1.3, bessCharge: 0 },
+      { sc: 0, sts: 2, asc: 3, shorePower: 30, reefers: 4.86, lights: 0, bessCharge: 0 },
+      { sc: 3, sts: 2, asc: 1, shorePower: 30, reefers: 4.65, lights: 0, bessCharge: 0 },
+      { sc: 0, sts: 4, asc: 4, shorePower: 23, reefers: 4.03, lights: 0, bessCharge: 2.97 },
+      { sc: 2, sts: 5, asc: 2, shorePower: 26, reefers: 4.83, lights: 0, bessCharge: 0 },
+      { sc: 1, sts: 3, asc: 3, shorePower: 29, reefers: 5, lights: 0, bessCharge: 0 },
+      { sc: 4, sts: 0, asc: 0, shorePower: 21, reefers: 4.69, lights: 0, bessCharge: 8.31 },
+      { sc: 2, sts: 1, asc: 2, shorePower: 28, reefers: 4.83, lights: 0, bessCharge: 0.17 },
+      { sc: 2, sts: 3, asc: 0, shorePower: 28, reefers: 4.92, lights: 0, bessCharge: 0.08 },
+      { sc: 2, sts: 5, asc: 2, shorePower: 24, reefers: 4.77, lights: 0, bessCharge: 0.23 },
+      { sc: 3, sts: 1, asc: 2, shorePower: 24, reefers: 4.13, lights: 0, bessCharge: 3.87 },
+      { sc: 0, sts: 3, asc: 3, shorePower: 23, reefers: 4.16, lights: 0, bessCharge: 4.84 },
+      { sc: 2, sts: 5, asc: 3, shorePower: 26, reefers: 4.71, lights: 1.3, bessCharge: 0 },
+      { sc: 4, sts: 4, asc: 4, shorePower: 26, reefers: 4.81, lights: 1.3, bessCharge: 0 },
+      { sc: 1, sts: 5, asc: 0, shorePower: 24, reefers: 4.41, lights: 1.3, bessCharge: 2.29 },
+      { sc: 3, sts: 5, asc: 1, shorePower: 21, reefers: 4.03, lights: 1.3, bessCharge: 2.67 },
+      { sc: 2, sts: 4, asc: 3, shorePower: 27, reefers: 4.28, lights: 1.3, bessCharge: 0 },
     ];
 
     const data = [];
@@ -124,6 +124,7 @@ export default function ZepaExplorer() {
           shorePower: Math.round(hourData.shorePower * (1 + (Math.random() - 0.5) * variation)),
           reefers: Math.round(hourData.reefers * (1 + (Math.random() - 0.5) * variation) * 100) / 100,
           lights: Math.round(hourData.lights * (1 + (Math.random() - 0.5) * variation) * 100) / 100,
+          bessCharge: Math.round(hourData.bessCharge * (1 + (Math.random() - 0.5) * variation) * 100) / 100,
         });
       }
     }
@@ -134,7 +135,7 @@ export default function ZepaExplorer() {
   // Calculate statistics from load data
   const calculateStats = () => {
     const loadData = generateLoadData();
-    const totalLoads = loadData.map(d => d.sts + d.sc + d.asc + d.shorePower + d.reefers + d.lights);
+    const totalLoads = loadData.map(d => d.sts + d.sc + d.asc + d.shorePower + d.reefers + d.lights + d.bessCharge);
     const peakLoad = Math.max(...totalLoads);
     const minLoad = Math.min(...totalLoads);
     const peakFluctuation = peakLoad - minLoad;
