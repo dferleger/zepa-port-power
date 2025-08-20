@@ -302,7 +302,6 @@ const LoadProfileChart: React.FC = () => {
               fill="transparent"
               strokeWidth={0}
               name=""
-              hide={true}
             />
             {/* Then stack the hashed discharge area on top */}
             <Area 
