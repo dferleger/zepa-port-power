@@ -139,10 +139,16 @@ const LoadProfileChart: React.FC = () => {
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
+      // Filter out transparent overlay elements and entries without valid labels
+      const validPayload = payload.filter((entry: any) => 
+        entry.dataKey !== 'dischargeOverlayBottom' && 
+        equipmentLabels[entry.dataKey as keyof typeof equipmentLabels]
+      );
+      
       return (
         <div className="bg-white p-3 rounded-lg shadow-lg border">
           <p className="font-semibold mb-2">{`Time: ${label}`}</p>
-          {payload.map((entry: any, index: number) => (
+          {validPayload.map((entry: any, index: number) => (
             <div key={index} className="flex items-center gap-2 mb-1">
               <div
                 className="w-3 h-3 rounded"
@@ -302,6 +308,7 @@ const LoadProfileChart: React.FC = () => {
               fill="transparent"
               strokeWidth={0}
               name=""
+              hide={true}
             />
             {/* Then stack the hashed discharge area on top */}
             <Area 
