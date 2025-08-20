@@ -28,7 +28,7 @@ interface TooltipData {
 }
 
 const LoadProfileChart: React.FC = () => {
-  // Generate hourly data for 24 hours based on provided values
+  // Generate 15-minute interval data for 24 hours (96 data points) based on hourly values
   const generateLoadData = (): LoadData[] => {
     const hourlyData = [
       { sc: 1, sts: 3, asc: 1, shorePower: 27, reefers: 4.42 },
@@ -60,17 +60,23 @@ const LoadProfileChart: React.FC = () => {
     const data: LoadData[] = [];
     
     for (let hour = 0; hour < 24; hour++) {
-      const time = `${hour.toString().padStart(2, '0')}:00`;
-      const hourData = hourlyData[hour];
-      
-      data.push({
-        time,
-        sc: hourData.sc,
-        sts: hourData.sts,
-        asc: hourData.asc,
-        shorePower: hourData.shorePower,
-        reefers: hourData.reefers,
-      });
+      for (let quarter = 0; quarter < 4; quarter++) {
+        const minutes = quarter * 15;
+        const time = `${hour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        const hourData = hourlyData[hour];
+        
+        // Add slight variation (±5%) to base values for 15-min intervals
+        const variation = 0.05;
+        
+        data.push({
+          time,
+          sc: Math.max(0, Math.round(hourData.sc * (1 + (Math.random() - 0.5) * variation))),
+          sts: Math.max(0, Math.round(hourData.sts * (1 + (Math.random() - 0.5) * variation))),
+          asc: Math.max(0, Math.round(hourData.asc * (1 + (Math.random() - 0.5) * variation))),
+          shorePower: Math.round(hourData.shorePower * (1 + (Math.random() - 0.5) * variation)),
+          reefers: Math.round(hourData.reefers * (1 + (Math.random() - 0.5) * variation) * 100) / 100,
+        });
+      }
     }
     
     return data;
@@ -143,9 +149,10 @@ const LoadProfileChart: React.FC = () => {
               dataKey="time" 
               stroke="#666"
               fontSize={11}
-              tickLine={false}
-              axisLine={false}
+              tickLine={true}
+              axisLine={true}
               interval={0}
+              tickFormatter={formatXAxisTick}
               tick={{ fontSize: 10 }}
             />
             <YAxis 
