@@ -889,8 +889,8 @@ export default function ZepaExplorer() {
                 <div className="lg:col-span-2">
                   <div className="space-y-3">
                     <LoadProfileChart />
+                    <h3 className="text-sm text-muted-foreground font-medium">Time - data in 15 minute intervals</h3>
                   </div>
-                  <h3 className="text-sm text-muted-foreground font-medium mt-4">Time - data in 15 minute intervals</h3>
                 </div>
                 <div className="space-y-4">
                   <div className="bg-muted p-4 rounded-lg">

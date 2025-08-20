@@ -86,34 +86,9 @@ const LoadProfileChart: React.FC = () => {
 
   const loadData = generateLoadData();
 
-  // Calculate statistics from the data
-  const totalLoads = loadData.map(d => d.sts + d.sc + d.asc + d.shorePower + d.reefers + d.lights);
-  const peakLoad = Math.max(...totalLoads);
-  const minLoad = Math.min(...totalLoads);
-  const averageLoad = totalLoads.reduce((sum, load) => sum + load, 0) / totalLoads.length;
-  const peakLoadTime = loadData[totalLoads.indexOf(peakLoad)].time;
-  
-  // Peak fluctuation (difference between max and min load)
-  const peakFluctuation = peakLoad - minLoad;
-  
-  // Total energy consumption in 24 hours (MW * 0.25h per interval = MWh)
-  const totalEnergy = totalLoads.reduce((sum, load) => sum + load * 0.25, 0);
-  
-  // Individual equipment energy totals
-  const equipmentEnergy = {
-    sts: loadData.reduce((sum, d) => sum + d.sts * 0.25, 0),
-    sc: loadData.reduce((sum, d) => sum + d.sc * 0.25, 0),
-    asc: loadData.reduce((sum, d) => sum + d.asc * 0.25, 0),
-    shorePower: loadData.reduce((sum, d) => sum + d.shorePower * 0.25, 0),
-    reefers: loadData.reduce((sum, d) => sum + d.reefers * 0.25, 0),
-    lights: loadData.reduce((sum, d) => sum + d.lights * 0.25, 0),
-  };
-  
-  // Load factor (average load / peak load)
-  const loadFactor = (averageLoad / peakLoad) * 100;
-
   const gridCapacity = 38; // MW
-  const yAxisMax = Math.max(gridCapacity * 1.1, peakLoad * 1.2); // Ensure grid capacity line is visible
+  const maxLoad = Math.max(...loadData.map(d => d.sts + d.sc + d.asc + d.shorePower + d.reefers + d.lights));
+  const yAxisMax = Math.max(gridCapacity * 1.1, maxLoad * 1.2); // Ensure grid capacity line is visible
 
   const equipmentColors = {
     sts: '#DEF4A1',        // light green
@@ -269,50 +244,6 @@ const LoadProfileChart: React.FC = () => {
             />
           </AreaChart>
         </ResponsiveContainer>
-      </div>
-      
-      {/* Statistics Section */}
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-lg shadow-sm border">
-          <h3 className="text-sm font-semibold text-gray-600 mb-1">Peak Load</h3>
-          <p className="text-2xl font-bold text-gray-900">{peakLoad.toFixed(1)} MW</p>
-          <p className="text-xs text-gray-500">at {peakLoadTime}</p>
-        </div>
-        
-        <div className="bg-white p-4 rounded-lg shadow-sm border">
-          <h3 className="text-sm font-semibold text-gray-600 mb-1">Energy Usage (24hr)</h3>
-          <p className="text-2xl font-bold text-gray-900">{totalEnergy.toFixed(1)} MWh</p>
-          <p className="text-xs text-gray-500">total consumption</p>
-        </div>
-        
-        <div className="bg-white p-4 rounded-lg shadow-sm border">
-          <h3 className="text-sm font-semibold text-gray-600 mb-1">Peak Fluctuation</h3>
-          <p className="text-2xl font-bold text-gray-900">{peakFluctuation.toFixed(1)} MW</p>
-          <p className="text-xs text-gray-500">max - min load</p>
-        </div>
-        
-        <div className="bg-white p-4 rounded-lg shadow-sm border">
-          <h3 className="text-sm font-semibold text-gray-600 mb-1">Load Factor</h3>
-          <p className="text-2xl font-bold text-gray-900">{loadFactor.toFixed(1)}%</p>
-          <p className="text-xs text-gray-500">avg/peak ratio</p>
-        </div>
-      </div>
-      
-      {/* Equipment Energy Breakdown */}
-      <div className="mt-4 bg-white p-4 rounded-lg shadow-sm border">
-        <h3 className="text-sm font-semibold text-gray-600 mb-3">Energy Consumption by Equipment (24hr)</h3>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-          {Object.entries(equipmentEnergy).map(([key, value]) => (
-            <div key={key} className="text-center">
-              <div 
-                className="w-4 h-4 rounded mx-auto mb-1" 
-                style={{ backgroundColor: equipmentColors[key as keyof typeof equipmentColors] }}
-              />
-              <p className="text-xs text-gray-600">{equipmentLabels[key as keyof typeof equipmentLabels]}</p>
-              <p className="text-sm font-semibold">{value.toFixed(1)} MWh</p>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );
