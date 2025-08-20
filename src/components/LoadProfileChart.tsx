@@ -116,14 +116,14 @@ const LoadProfileChart: React.FC = () => {
   const yAxisMax = Math.max(gridCapacity * 1.1, maxLoad * 1.2); // Ensure grid capacity line is visible
 
   const equipmentColors = {
-    sts: '#DEF4A1',        // light green
-    sc: '#001160',         // dark blue  
-    asc: '#FF69B4',        // hot pink
-    shorePower: '#FF8C00', // dark orange
-    reefers: '#EBEBEB',    // grey
-    lights: '#FFD700',     // gold
-    bessCharge: '#8A2BE2', // blue violet
-    bessDischarge: '#DDA0DD', // plum (lighter purple for overlay)
+    sts: '#C8D6E5',        // light blue/gray to match reference
+    sc: '#9B8B3A',         // olive/brown-green to match reference  
+    asc: '#34495E',        // dark blue/navy to match reference
+    shorePower: '#16A085', // teal/dark green to match reference
+    reefers: '#A8E6CF',    // light green to match reference
+    lights: '#F1C40F',     // yellow to match reference
+    bessCharge: '#B19CD9', // light purple/lavender to match reference
+    bessDischarge: '#007BFF', // bright blue for better visibility in overlay
   };
 
   const equipmentLabels = {
@@ -183,7 +183,7 @@ const LoadProfileChart: React.FC = () => {
           >
             <defs>
               <pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="4" height="4">
-                <path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2" style={{stroke: '#DDA0DD', strokeWidth: 1}} />
+                <path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2" style={{stroke: '#007BFF', strokeWidth: 1}} />
               </pattern>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" />
@@ -219,10 +219,10 @@ const LoadProfileChart: React.FC = () => {
               }}
             />
             
-            {/* Grid capacity reference line - thin line */}
+            {/* Grid capacity reference line - red line to match reference */}
             <ReferenceLine 
               y={gridCapacity} 
-              stroke="#FF69B4" 
+              stroke="#E74C3C" 
               strokeWidth={2}
               strokeDasharray="5 5"
             />
