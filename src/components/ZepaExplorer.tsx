@@ -70,6 +70,7 @@ export default function ZepaExplorer() {
   const [shorePowerConnections, setShorePowerConnections] = useState(3);
   const [shorePowerSize, setShorePowerSize] = useState(10);
   const [reeferContainers, setReeferContainers] = useState(1000);
+  const [terminalLighting, setTerminalLighting] = useState(1.3);
   const [includeBESS, setIncludeBESS] = useState(false);
   const [bessSize, setBessSize] = useState(10);
   
@@ -777,73 +778,98 @@ export default function ZepaExplorer() {
               Add shore power connections and reefer container loads to complete the comprehensive load assessment.
             </CardDescription>
           </CardHeader>
-          <CardContent className="grid md:grid-cols-2 gap-6 pt-8">
-            <div className="space-y-4">
-              <h3 className="font-semibold">Shore Power</h3>
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Label htmlFor="shore-connections">Number of connections</Label>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Detailed instructions and methodology for shore power connection calculations will be provided to give user context.</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </div>
-                <Input
-                  id="shore-connections"
-                  type="number"
-                  value={shorePowerConnections}
-                  onChange={(e) => setShorePowerConnections(Number(e.target.value))}
-                />
-              </div>
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Label htmlFor="shore-size">Size per connection (MW)</Label>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Detailed instructions and methodology for shore power sizing will be provided to give user context.</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </div>
-                <Input
-                  id="shore-size"
-                  type="number"
-                  step="0.1"
-                  value={shorePowerSize}
-                  onChange={(e) => setShorePowerSize(Number(e.target.value))}
-                />
-              </div>
-            </div>
-            <div className="space-y-4">
-              <h3 className="font-semibold">Reefer Containers</h3>
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Label htmlFor="reefers">
-                    Number of reefer containers on ship and in terminal
-                  </Label>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Detailed instructions and methodology for reefer container load calculations will be provided to give user context.</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </div>
-                <Input
-                  id="reefers"
-                  type="number"
-                  value={reeferContainers}
-                  onChange={(e) => setReeferContainers(Number(e.target.value))}
-                />
-              </div>
-            </div>
+           <CardContent className="grid md:grid-cols-3 gap-6 pt-8">
+             <div className="space-y-4">
+               <h3 className="font-semibold">Shore Power</h3>
+               <div className="space-y-2">
+                 <div className="flex items-center gap-2">
+                   <Label htmlFor="shore-connections">Number of connections</Label>
+                   <Tooltip>
+                     <TooltipTrigger>
+                       <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
+                     </TooltipTrigger>
+                     <TooltipContent>
+                       <p>Detailed instructions and methodology for shore power connection calculations will be provided to give user context.</p>
+                     </TooltipContent>
+                   </Tooltip>
+                 </div>
+                 <Input
+                   id="shore-connections"
+                   type="number"
+                   value={shorePowerConnections}
+                   onChange={(e) => setShorePowerConnections(Number(e.target.value))}
+                 />
+               </div>
+               <div className="space-y-2">
+                 <div className="flex items-center gap-2">
+                   <Label htmlFor="shore-size">Size per connection (MW)</Label>
+                   <Tooltip>
+                     <TooltipTrigger>
+                       <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
+                     </TooltipTrigger>
+                     <TooltipContent>
+                       <p>Detailed instructions and methodology for shore power sizing will be provided to give user context.</p>
+                     </TooltipContent>
+                   </Tooltip>
+                 </div>
+                 <Input
+                   id="shore-size"
+                   type="number"
+                   step="0.1"
+                   value={shorePowerSize}
+                   onChange={(e) => setShorePowerSize(Number(e.target.value))}
+                 />
+               </div>
+             </div>
+             <div className="space-y-4">
+               <h3 className="font-semibold">Reefer Containers</h3>
+               <div className="space-y-2">
+                 <div className="flex items-center gap-2">
+                   <Label htmlFor="reefers">
+                     Number of reefer containers on ship and in terminal
+                   </Label>
+                   <Tooltip>
+                     <TooltipTrigger>
+                       <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
+                     </TooltipTrigger>
+                     <TooltipContent>
+                       <p>Detailed instructions and methodology for reefer container load calculations will be provided to give user context.</p>
+                     </TooltipContent>
+                   </Tooltip>
+                 </div>
+                 <Input
+                   id="reefers"
+                   type="number"
+                   value={reeferContainers}
+                   onChange={(e) => setReeferContainers(Number(e.target.value))}
+                 />
+               </div>
+             </div>
+             <div className="space-y-4">
+               <h3 className="font-semibold">Terminal Lighting</h3>
+               <div className="space-y-2">
+                 <div className="flex items-center gap-2">
+                   <Label htmlFor="lighting">
+                     Terminal lighting load (MW)
+                   </Label>
+                   <Tooltip>
+                     <TooltipTrigger>
+                       <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help hover:text-foreground transition-colors" />
+                     </TooltipTrigger>
+                     <TooltipContent>
+                       <p>Power consumption for terminal lighting systems including general area lighting and security lighting.</p>
+                     </TooltipContent>
+                   </Tooltip>
+                 </div>
+                 <Input
+                   id="lighting"
+                   type="number"
+                   step="0.1"
+                   value={terminalLighting}
+                   onChange={(e) => setTerminalLighting(Number(e.target.value))}
+                 />
+               </div>
+             </div>
           </CardContent>
         </Card>
 
