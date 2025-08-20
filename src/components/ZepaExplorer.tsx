@@ -75,6 +75,79 @@ export default function ZepaExplorer() {
   
   const [showResults, setShowResults] = useState(false);
 
+  // Generate load data for calculations (same logic as in LoadProfileChart)
+  const generateLoadData = () => {
+    const hourlyData = [
+      { sc: 1, sts: 3, asc: 1, shorePower: 27, reefers: 4.42, lights: 1.3 },
+      { sc: 2, sts: 1, asc: 3, shorePower: 28, reefers: 4.47, lights: 1.3 },
+      { sc: 2, sts: 2, asc: 2, shorePower: 23, reefers: 4.24, lights: 1.3 },
+      { sc: 0, sts: 3, asc: 0, shorePower: 29, reefers: 4.16, lights: 1.3 },
+      { sc: 0, sts: 5, asc: 1, shorePower: 23, reefers: 4.45, lights: 1.3 },
+      { sc: 1, sts: 4, asc: 4, shorePower: 23, reefers: 4.59, lights: 1.3 },
+      { sc: 3, sts: 5, asc: 1, shorePower: 25, reefers: 4.21, lights: 1.3 },
+      { sc: 4, sts: 1, asc: 4, shorePower: 27, reefers: 4.2, lights: 1.3 },
+      { sc: 0, sts: 2, asc: 3, shorePower: 30, reefers: 4.86, lights: 0 },
+      { sc: 3, sts: 2, asc: 1, shorePower: 30, reefers: 4.65, lights: 0 },
+      { sc: 0, sts: 4, asc: 4, shorePower: 23, reefers: 4.03, lights: 0 },
+      { sc: 2, sts: 5, asc: 2, shorePower: 26, reefers: 4.83, lights: 0 },
+      { sc: 1, sts: 3, asc: 3, shorePower: 29, reefers: 5, lights: 0 },
+      { sc: 4, sts: 0, asc: 0, shorePower: 21, reefers: 4.69, lights: 0 },
+      { sc: 2, sts: 1, asc: 2, shorePower: 28, reefers: 4.83, lights: 0 },
+      { sc: 2, sts: 3, asc: 0, shorePower: 28, reefers: 4.92, lights: 0 },
+      { sc: 2, sts: 5, asc: 2, shorePower: 24, reefers: 4.77, lights: 0 },
+      { sc: 3, sts: 1, asc: 2, shorePower: 24, reefers: 4.13, lights: 0 },
+      { sc: 0, sts: 3, asc: 3, shorePower: 23, reefers: 4.16, lights: 0 },
+      { sc: 2, sts: 5, asc: 3, shorePower: 26, reefers: 4.71, lights: 1.3 },
+      { sc: 4, sts: 4, asc: 4, shorePower: 26, reefers: 4.81, lights: 1.3 },
+      { sc: 1, sts: 5, asc: 0, shorePower: 24, reefers: 4.41, lights: 1.3 },
+      { sc: 3, sts: 5, asc: 1, shorePower: 21, reefers: 4.03, lights: 1.3 },
+      { sc: 2, sts: 4, asc: 3, shorePower: 27, reefers: 4.28, lights: 1.3 },
+    ];
+
+    const data = [];
+    
+    for (let hour = 0; hour < 24; hour++) {
+      for (let quarter = 0; quarter < 4; quarter++) {
+        const minutes = quarter * 15;
+        const time = `${hour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        const hourData = hourlyData[hour];
+        
+        // Add slight variation (±5%) to base values for 15-min intervals
+        const variation = 0.05;
+        
+        data.push({
+          time,
+          sc: Math.max(0, Math.round(hourData.sc * (1 + (Math.random() - 0.5) * variation))),
+          sts: Math.max(0, Math.round(hourData.sts * (1 + (Math.random() - 0.5) * variation))),
+          asc: Math.max(0, Math.round(hourData.asc * (1 + (Math.random() - 0.5) * variation))),
+          shorePower: Math.round(hourData.shorePower * (1 + (Math.random() - 0.5) * variation)),
+          reefers: Math.round(hourData.reefers * (1 + (Math.random() - 0.5) * variation) * 100) / 100,
+          lights: Math.round(hourData.lights * (1 + (Math.random() - 0.5) * variation) * 100) / 100,
+        });
+      }
+    }
+    
+    return data;
+  };
+
+  // Calculate statistics from load data
+  const calculateStats = () => {
+    const loadData = generateLoadData();
+    const totalLoads = loadData.map(d => d.sts + d.sc + d.asc + d.shorePower + d.reefers + d.lights);
+    const peakLoad = Math.max(...totalLoads);
+    const minLoad = Math.min(...totalLoads);
+    const peakFluctuation = peakLoad - minLoad;
+    const totalEnergy = totalLoads.reduce((sum, load) => sum + load, 0) * 0.25; // Convert to MWh (15min intervals)
+    
+    return {
+      peakLoad: Math.round(peakLoad * 10) / 10, // Round to 1 decimal
+      totalEnergy: Math.round(totalEnergy * 10) / 10,
+      peakFluctuation: Math.round(peakFluctuation * 10) / 10
+    };
+  };
+
+  const stats = calculateStats();
+
   // Archetype to equipment mapping
   const archetypeMapping = {
     'sts-tt-rtg': {
@@ -892,20 +965,20 @@ export default function ZepaExplorer() {
                     <h3 className="text-sm text-muted-foreground font-medium">Time - data in 15 minute intervals</h3>
                   </div>
                 </div>
-                <div className="space-y-4">
-                  <div className="bg-muted p-4 rounded-lg">
-                    <div className="text-sm text-muted-foreground">Peak load of terminal</div>
-                    <div className="text-2xl font-bold text-primary">55.8 MW</div>
-                  </div>
-                  <div className="bg-muted p-4 rounded-lg">
-                    <div className="text-sm text-muted-foreground">Energy usage in 24 hours</div>
-                    <div className="text-2xl font-bold text-primary">X MWh</div>
-                  </div>
-                  <div className="bg-muted p-4 rounded-lg">
-                    <div className="text-sm text-muted-foreground">Peak fluctuation within a day</div>
-                    <div className="text-2xl font-bold text-primary">X MW</div>
-                  </div>
-                </div>
+                 <div className="space-y-4">
+                   <div className="bg-muted p-4 rounded-lg">
+                     <div className="text-sm text-muted-foreground">Peak load of terminal</div>
+                     <div className="text-2xl font-bold text-primary">{stats.peakLoad} MW</div>
+                   </div>
+                   <div className="bg-muted p-4 rounded-lg">
+                     <div className="text-sm text-muted-foreground">Energy usage in 24 hours</div>
+                     <div className="text-2xl font-bold text-primary">{stats.totalEnergy} MWh</div>
+                   </div>
+                   <div className="bg-muted p-4 rounded-lg">
+                     <div className="text-sm text-muted-foreground">Peak fluctuation within a day</div>
+                     <div className="text-2xl font-bold text-primary">{stats.peakFluctuation} MW</div>
+                   </div>
+                 </div>
               </div>
               <Button className="w-full text-white" style={{ backgroundColor: '#001160' }}>
                 Click to export inputs and outputs
