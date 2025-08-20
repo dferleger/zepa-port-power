@@ -895,7 +895,7 @@ export default function ZepaExplorer() {
                 <div className="space-y-4">
                   <div className="bg-muted p-4 rounded-lg">
                     <div className="text-sm text-muted-foreground">Peak load of terminal</div>
-                    <div className="text-2xl font-bold text-primary">59 MW</div>
+                    <div className="text-2xl font-bold text-primary">55.8 MW</div>
                   </div>
                   <div className="bg-muted p-4 rounded-lg">
                     <div className="text-sm text-muted-foreground">Energy usage in 24 hours</div>
