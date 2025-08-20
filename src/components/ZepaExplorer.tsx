@@ -1004,7 +1004,7 @@ export default function ZepaExplorer() {
                    </div>
                    <div className="bg-muted p-4 rounded-lg">
                      <div className="text-sm text-muted-foreground">Energy usage in 24 hours</div>
-                     <div className="text-2xl font-bold text-primary">{stats.totalEnergy} MWh</div>
+                     <div className="text-2xl font-bold text-primary">X MWh</div>
                    </div>
                    <div className="bg-muted p-4 rounded-lg">
                      <div className="text-sm text-muted-foreground">Peak fluctuation within a day</div>
