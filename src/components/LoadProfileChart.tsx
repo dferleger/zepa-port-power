@@ -18,6 +18,7 @@ interface LoadData {
   asc: number;
   shorePower: number;
   reefers: number;
+  lights: number;
 }
 
 interface TooltipData {
@@ -31,30 +32,30 @@ const LoadProfileChart: React.FC = () => {
   // Generate 15-minute interval data for 24 hours (96 data points) based on hourly values
   const generateLoadData = (): LoadData[] => {
     const hourlyData = [
-      { sc: 1, sts: 3, asc: 1, shorePower: 27, reefers: 4.42 },
-      { sc: 2, sts: 1, asc: 3, shorePower: 28, reefers: 4.47 },
-      { sc: 2, sts: 2, asc: 2, shorePower: 23, reefers: 4.24 },
-      { sc: 0, sts: 3, asc: 0, shorePower: 29, reefers: 4.16 },
-      { sc: 0, sts: 5, asc: 1, shorePower: 23, reefers: 4.45 },
-      { sc: 1, sts: 4, asc: 4, shorePower: 23, reefers: 4.59 },
-      { sc: 3, sts: 5, asc: 1, shorePower: 25, reefers: 4.21 },
-      { sc: 4, sts: 1, asc: 4, shorePower: 27, reefers: 4.2 },
-      { sc: 0, sts: 2, asc: 3, shorePower: 30, reefers: 4.86 },
-      { sc: 3, sts: 2, asc: 1, shorePower: 30, reefers: 4.65 },
-      { sc: 0, sts: 4, asc: 4, shorePower: 23, reefers: 4.03 },
-      { sc: 2, sts: 5, asc: 2, shorePower: 26, reefers: 4.83 },
-      { sc: 1, sts: 3, asc: 3, shorePower: 29, reefers: 5 },
-      { sc: 4, sts: 0, asc: 0, shorePower: 21, reefers: 4.69 },
-      { sc: 2, sts: 1, asc: 2, shorePower: 28, reefers: 4.83 },
-      { sc: 2, sts: 3, asc: 0, shorePower: 28, reefers: 4.92 },
-      { sc: 2, sts: 5, asc: 2, shorePower: 24, reefers: 4.77 },
-      { sc: 3, sts: 1, asc: 2, shorePower: 24, reefers: 4.13 },
-      { sc: 0, sts: 3, asc: 3, shorePower: 23, reefers: 4.16 },
-      { sc: 2, sts: 5, asc: 3, shorePower: 26, reefers: 4.71 },
-      { sc: 4, sts: 4, asc: 4, shorePower: 26, reefers: 4.81 },
-      { sc: 1, sts: 5, asc: 0, shorePower: 24, reefers: 4.41 },
-      { sc: 3, sts: 5, asc: 1, shorePower: 21, reefers: 4.03 },
-      { sc: 2, sts: 4, asc: 3, shorePower: 27, reefers: 4.28 },
+      { sc: 1, sts: 3, asc: 1, shorePower: 27, reefers: 4.42, lights: 1.3 },
+      { sc: 2, sts: 1, asc: 3, shorePower: 28, reefers: 4.47, lights: 1.3 },
+      { sc: 2, sts: 2, asc: 2, shorePower: 23, reefers: 4.24, lights: 1.3 },
+      { sc: 0, sts: 3, asc: 0, shorePower: 29, reefers: 4.16, lights: 1.3 },
+      { sc: 0, sts: 5, asc: 1, shorePower: 23, reefers: 4.45, lights: 1.3 },
+      { sc: 1, sts: 4, asc: 4, shorePower: 23, reefers: 4.59, lights: 1.3 },
+      { sc: 3, sts: 5, asc: 1, shorePower: 25, reefers: 4.21, lights: 1.3 },
+      { sc: 4, sts: 1, asc: 4, shorePower: 27, reefers: 4.2, lights: 1.3 },
+      { sc: 0, sts: 2, asc: 3, shorePower: 30, reefers: 4.86, lights: 0 },
+      { sc: 3, sts: 2, asc: 1, shorePower: 30, reefers: 4.65, lights: 0 },
+      { sc: 0, sts: 4, asc: 4, shorePower: 23, reefers: 4.03, lights: 0 },
+      { sc: 2, sts: 5, asc: 2, shorePower: 26, reefers: 4.83, lights: 0 },
+      { sc: 1, sts: 3, asc: 3, shorePower: 29, reefers: 5, lights: 0 },
+      { sc: 4, sts: 0, asc: 0, shorePower: 21, reefers: 4.69, lights: 0 },
+      { sc: 2, sts: 1, asc: 2, shorePower: 28, reefers: 4.83, lights: 0 },
+      { sc: 2, sts: 3, asc: 0, shorePower: 28, reefers: 4.92, lights: 0 },
+      { sc: 2, sts: 5, asc: 2, shorePower: 24, reefers: 4.77, lights: 0 },
+      { sc: 3, sts: 1, asc: 2, shorePower: 24, reefers: 4.13, lights: 0 },
+      { sc: 0, sts: 3, asc: 3, shorePower: 23, reefers: 4.16, lights: 0 },
+      { sc: 2, sts: 5, asc: 3, shorePower: 26, reefers: 4.71, lights: 1.3 },
+      { sc: 4, sts: 4, asc: 4, shorePower: 26, reefers: 4.81, lights: 1.3 },
+      { sc: 1, sts: 5, asc: 0, shorePower: 24, reefers: 4.41, lights: 1.3 },
+      { sc: 3, sts: 5, asc: 1, shorePower: 21, reefers: 4.03, lights: 1.3 },
+      { sc: 2, sts: 4, asc: 3, shorePower: 27, reefers: 4.28, lights: 1.3 },
     ];
 
     const data: LoadData[] = [];
@@ -75,6 +76,7 @@ const LoadProfileChart: React.FC = () => {
           asc: Math.max(0, Math.round(hourData.asc * (1 + (Math.random() - 0.5) * variation))),
           shorePower: Math.round(hourData.shorePower * (1 + (Math.random() - 0.5) * variation)),
           reefers: Math.round(hourData.reefers * (1 + (Math.random() - 0.5) * variation) * 100) / 100,
+          lights: Math.round(hourData.lights * (1 + (Math.random() - 0.5) * variation) * 100) / 100,
         });
       }
     }
@@ -85,7 +87,7 @@ const LoadProfileChart: React.FC = () => {
   const loadData = generateLoadData();
 
   const gridCapacity = 38; // MW
-  const maxLoad = Math.max(...loadData.map(d => d.sts + d.sc + d.asc + d.shorePower + d.reefers));
+  const maxLoad = Math.max(...loadData.map(d => d.sts + d.sc + d.asc + d.shorePower + d.reefers + d.lights));
   const yAxisMax = Math.max(gridCapacity * 1.1, maxLoad * 1.2); // Ensure grid capacity line is visible
 
   const equipmentColors = {
@@ -94,6 +96,7 @@ const LoadProfileChart: React.FC = () => {
     asc: '#FF69B4',        // hot pink
     shorePower: '#FF8C00', // dark orange
     reefers: '#EBEBEB',    // grey
+    lights: '#FFD700',     // gold
   };
 
   const equipmentLabels = {
@@ -102,6 +105,7 @@ const LoadProfileChart: React.FC = () => {
     asc: 'Automated Stacking Crane (ASC)',
     shorePower: 'Shore Power',
     reefers: 'Reefer Containers',
+    lights: 'Lighting',
   };
 
   const CustomTooltip = ({ active, payload, label }: any) => {
@@ -229,6 +233,14 @@ const LoadProfileChart: React.FC = () => {
               stroke={equipmentColors.reefers} 
               fill={equipmentColors.reefers}
               name={equipmentLabels.reefers}
+            />
+            <Area 
+              type="monotone" 
+              dataKey="lights" 
+              stackId="1"
+              stroke={equipmentColors.lights} 
+              fill={equipmentColors.lights}
+              name={equipmentLabels.lights}
             />
           </AreaChart>
         </ResponsiveContainer>
