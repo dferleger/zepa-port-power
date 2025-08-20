@@ -21,6 +21,9 @@ interface LoadData {
   lights: number;
   bessCharge: number;
   bessDischarge: number;
+  totalLoad: number;
+  dischargeOverlayTop: number;
+  dischargeOverlayBottom: number;
 }
 
 interface TooltipData {
@@ -74,16 +77,31 @@ const LoadProfileChart: React.FC = () => {
         // Add slight variation (±5%) to base values for 15-min intervals
         const variation = 0.05;
         
+        const sc = Math.max(0, Math.round(hourData.sc * (1 + (Math.random() - 0.5) * variation)));
+        const sts = Math.max(0, Math.round(hourData.sts * (1 + (Math.random() - 0.5) * variation)));
+        const asc = Math.max(0, Math.round(hourData.asc * (1 + (Math.random() - 0.5) * variation)));
+        const shorePower = Math.round(hourData.shorePower * (1 + (Math.random() - 0.5) * variation));
+        const reefers = Math.round(hourData.reefers * (1 + (Math.random() - 0.5) * variation) * 100) / 100;
+        const lights = Math.round(hourData.lights * (1 + (Math.random() - 0.5) * variation) * 100) / 100;
+        const bessCharge = Math.round(hourData.bessCharge * (1 + (Math.random() - 0.5) * variation) * 100) / 100;
+        const bessDischarge = hour < bessDischargeValues.length ? bessDischargeValues[hour] : 0;
+        
+        // Calculate total load (excluding BESS discharge) for overlay positioning
+        const totalLoad = sc + sts + asc + shorePower + reefers + lights + bessCharge;
+        
         data.push({
           time,
-          sc: Math.max(0, Math.round(hourData.sc * (1 + (Math.random() - 0.5) * variation))),
-          sts: Math.max(0, Math.round(hourData.sts * (1 + (Math.random() - 0.5) * variation))),
-          asc: Math.max(0, Math.round(hourData.asc * (1 + (Math.random() - 0.5) * variation))),
-          shorePower: Math.round(hourData.shorePower * (1 + (Math.random() - 0.5) * variation)),
-          reefers: Math.round(hourData.reefers * (1 + (Math.random() - 0.5) * variation) * 100) / 100,
-          lights: Math.round(hourData.lights * (1 + (Math.random() - 0.5) * variation) * 100) / 100,
-          bessCharge: Math.round(hourData.bessCharge * (1 + (Math.random() - 0.5) * variation) * 100) / 100,
-          bessDischarge: hour < bessDischargeValues.length ? bessDischargeValues[hour] : 0,
+          sc,
+          sts,
+          asc,
+          shorePower,
+          reefers,
+          lights,
+          bessCharge,
+          bessDischarge,
+          totalLoad,
+          dischargeOverlayTop: totalLoad,
+          dischargeOverlayBottom: Math.max(0, totalLoad - bessDischarge),
         });
       }
     }
@@ -274,11 +292,22 @@ const LoadProfileChart: React.FC = () => {
               name={equipmentLabels.bessCharge}
             />
             
-            {/* BESS Discharge - Hashed pattern on top of stack to show subtraction */}
+            {/* BESS Discharge - Overlay that appears on top of existing stack */}
+            {/* First create a transparent area up to the full stack height */}
             <Area 
               type="monotone" 
-              dataKey="bessDischarge" 
-              stackId="1"
+              dataKey="dischargeOverlayBottom"
+              stackId="overlay"
+              stroke="transparent" 
+              fill="transparent"
+              strokeWidth={0}
+              name=""
+            />
+            {/* Then stack the hashed discharge area on top */}
+            <Area 
+              type="monotone" 
+              dataKey="bessDischarge"
+              stackId="overlay"
               stroke={equipmentColors.bessDischarge} 
               fill="url(#diagonalHatch)"
               fillOpacity={0.8}
