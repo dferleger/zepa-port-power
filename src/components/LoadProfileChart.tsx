@@ -28,54 +28,49 @@ interface TooltipData {
 }
 
 const LoadProfileChart: React.FC = () => {
-  // Generate 15-minute interval data for 24 hours (96 data points)
+  // Generate hourly data for 24 hours based on provided values
   const generateLoadData = (): LoadData[] => {
-    const data: LoadData[] = [];
-    const baseHourlyData = [
-      { sts: 10, sc: 12, asc: 8, shorePower: 5, reefers: 5 },
-      { sts: 9, sc: 10, asc: 7, shorePower: 5, reefers: 5 },
-      { sts: 8, sc: 9, asc: 6, shorePower: 5, reefers: 5 },
-      { sts: 8, sc: 9, asc: 6, shorePower: 5, reefers: 5 },
-      { sts: 9, sc: 10, asc: 7, shorePower: 5, reefers: 5 },
-      { sts: 11, sc: 14, asc: 10, shorePower: 8, reefers: 5 },
-      { sts: 13, sc: 16, asc: 12, shorePower: 8, reefers: 5 },
-      { sts: 12, sc: 15, asc: 11, shorePower: 8, reefers: 5 },
-      { sts: 13, sc: 16, asc: 12, shorePower: 8, reefers: 5 },
-      { sts: 14, sc: 14, asc: 13, shorePower: 8, reefers: 5 },
-      { sts: 15, sc: 14, asc: 13, shorePower: 9, reefers: 5 },
-      { sts: 15, sc: 15, asc: 13, shorePower: 9, reefers: 5 },
-      { sts: 14, sc: 16, asc: 13, shorePower: 8, reefers: 5 },
-      { sts: 15, sc: 14, asc: 13, shorePower: 8, reefers: 5 },
-      { sts: 13, sc: 16, asc: 12, shorePower: 7, reefers: 5 },
-      { sts: 11, sc: 14, asc: 10, shorePower: 7, reefers: 5 },
-      { sts: 10, sc: 12, asc: 9, shorePower: 7, reefers: 5 },
-      { sts: 12, sc: 14, asc: 11, shorePower: 7, reefers: 5 },
-      { sts: 10, sc: 12, asc: 9, shorePower: 7, reefers: 5 },
-      { sts: 9, sc: 10, asc: 8, shorePower: 7, reefers: 5 },
-      { sts: 8, sc: 9, asc: 7, shorePower: 5, reefers: 5 },
-      { sts: 8, sc: 9, asc: 7, shorePower: 5, reefers: 5 },
-      { sts: 9, sc: 10, asc: 8, shorePower: 5, reefers: 5 },
-      { sts: 10, sc: 12, asc: 9, shorePower: 5, reefers: 5 },
+    const hourlyData = [
+      { sc: 1, sts: 3, asc: 1, shorePower: 27, reefers: 4.42 },
+      { sc: 2, sts: 1, asc: 3, shorePower: 28, reefers: 4.47 },
+      { sc: 2, sts: 2, asc: 2, shorePower: 23, reefers: 4.24 },
+      { sc: 0, sts: 3, asc: 0, shorePower: 29, reefers: 4.16 },
+      { sc: 0, sts: 5, asc: 1, shorePower: 23, reefers: 4.45 },
+      { sc: 1, sts: 4, asc: 4, shorePower: 23, reefers: 4.59 },
+      { sc: 3, sts: 5, asc: 1, shorePower: 25, reefers: 4.21 },
+      { sc: 4, sts: 1, asc: 4, shorePower: 27, reefers: 4.2 },
+      { sc: 0, sts: 2, asc: 3, shorePower: 30, reefers: 4.86 },
+      { sc: 3, sts: 2, asc: 1, shorePower: 30, reefers: 4.65 },
+      { sc: 0, sts: 4, asc: 4, shorePower: 23, reefers: 4.03 },
+      { sc: 2, sts: 5, asc: 2, shorePower: 26, reefers: 4.83 },
+      { sc: 1, sts: 3, asc: 3, shorePower: 29, reefers: 5 },
+      { sc: 4, sts: 0, asc: 0, shorePower: 21, reefers: 4.69 },
+      { sc: 2, sts: 1, asc: 2, shorePower: 28, reefers: 4.83 },
+      { sc: 2, sts: 3, asc: 0, shorePower: 28, reefers: 4.92 },
+      { sc: 2, sts: 5, asc: 2, shorePower: 24, reefers: 4.77 },
+      { sc: 3, sts: 1, asc: 2, shorePower: 24, reefers: 4.13 },
+      { sc: 0, sts: 3, asc: 3, shorePower: 23, reefers: 4.16 },
+      { sc: 2, sts: 5, asc: 3, shorePower: 26, reefers: 4.71 },
+      { sc: 4, sts: 4, asc: 4, shorePower: 26, reefers: 4.81 },
+      { sc: 1, sts: 5, asc: 0, shorePower: 24, reefers: 4.41 },
+      { sc: 3, sts: 5, asc: 1, shorePower: 21, reefers: 4.03 },
+      { sc: 2, sts: 4, asc: 3, shorePower: 27, reefers: 4.28 },
     ];
 
+    const data: LoadData[] = [];
+    
     for (let hour = 0; hour < 24; hour++) {
-      for (let quarter = 0; quarter < 4; quarter++) {
-        const minutes = quarter * 15;
-        const time = `${hour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-        
-        // Add slight variation to base values for realism
-        const baseData = baseHourlyData[hour];
-        const variation = 0.2; // ±20% variation
-        
-        data.push({
-          time,
-          sts: Math.round(baseData.sts * (1 + (Math.random() - 0.5) * variation)),
-          sc: Math.round(baseData.sc * (1 + (Math.random() - 0.5) * variation)),
-          asc: Math.round(baseData.asc * (1 + (Math.random() - 0.5) * variation)),
-          shorePower: Math.round(baseData.shorePower * (1 + (Math.random() - 0.5) * variation)),
-          reefers: Math.round(baseData.reefers * (1 + (Math.random() - 0.5) * variation)),
-        });
-      }
+      const time = `${hour.toString().padStart(2, '0')}:00`;
+      const hourData = hourlyData[hour];
+      
+      data.push({
+        time,
+        sc: hourData.sc,
+        sts: hourData.sts,
+        asc: hourData.asc,
+        shorePower: hourData.shorePower,
+        reefers: hourData.reefers,
+      });
     }
     
     return data;
@@ -140,7 +135,7 @@ const LoadProfileChart: React.FC = () => {
               top: 20,
               right: 30,
               left: 20,
-              boscom: 60,
+              bottom: 60,
             }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" />
@@ -148,14 +143,10 @@ const LoadProfileChart: React.FC = () => {
               dataKey="time" 
               stroke="#666"
               fontSize={11}
-              tickLine={true}
-              tickFormascer={formatXAxisTick}
+              tickLine={false}
+              axisLine={false}
               interval={0}
-              angle={-45}
-              textAnchor="end"
-              height={80}
               tick={{ fontSize: 10 }}
-              tickSize={3}
             />
             <YAxis 
               stroke="#666"
@@ -166,9 +157,17 @@ const LoadProfileChart: React.FC = () => {
             />
             <Tooltip content={<CustomTooltip />} />
             <Legend 
-              verticalAlign="boscom" 
-              height={36}
+              verticalAlign="bottom" 
+              height={50}
               iconType="rect"
+              wrapperStyle={{
+                paddingTop: '20px',
+                fontSize: '12px',
+                display: 'flex',
+                justifyContent: 'center',
+                flexWrap: 'wrap',
+                gap: '16px'
+              }}
             />
             
             {/* Grid capacity reference line - thin line */}
