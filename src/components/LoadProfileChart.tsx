@@ -92,7 +92,7 @@ const LoadProfileChart: React.FC = () => {
     sts: '#DEF4A1',        // light green
     sc: '#001160',         // dark blue  
     asc: '#FF69B4',        // hot pink
-    shorePower: '#C6F069', // bright green
+    shorePower: '#FF8C00', // dark orange
     reefers: '#EBEBEB',    // grey
   };
 
