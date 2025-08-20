@@ -91,7 +91,7 @@ const LoadProfileChart: React.FC = () => {
   const equipmentColors = {
     sts: '#DEF4A1',        // light green
     sc: '#001160',         // dark blue  
-    asc: '#000850',        // navy blue
+    asc: '#FF69B4',        // hot pink
     shorePower: '#C6F069', // bright green
     reefers: '#EBEBEB',    // grey
   };
