@@ -14,8 +14,8 @@ import {
 interface LoadData {
   time: string;
   sts: number;
-  tt: number;
-  rtg: number;
+  sc: number;
+  asc: number;
   shorePower: number;
   reefers: number;
 }
@@ -32,30 +32,30 @@ const LoadProfileChart: React.FC = () => {
   const generateLoadData = (): LoadData[] => {
     const data: LoadData[] = [];
     const baseHourlyData = [
-      { sts: 10, tt: 12, rtg: 8, shorePower: 5, reefers: 5 },
-      { sts: 9, tt: 10, rtg: 7, shorePower: 5, reefers: 5 },
-      { sts: 8, tt: 9, rtg: 6, shorePower: 5, reefers: 5 },
-      { sts: 8, tt: 9, rtg: 6, shorePower: 5, reefers: 5 },
-      { sts: 9, tt: 10, rtg: 7, shorePower: 5, reefers: 5 },
-      { sts: 11, tt: 14, rtg: 10, shorePower: 8, reefers: 5 },
-      { sts: 13, tt: 16, rtg: 12, shorePower: 8, reefers: 5 },
-      { sts: 12, tt: 15, rtg: 11, shorePower: 8, reefers: 5 },
-      { sts: 13, tt: 16, rtg: 12, shorePower: 8, reefers: 5 },
-      { sts: 14, tt: 14, rtg: 13, shorePower: 8, reefers: 5 },
-      { sts: 15, tt: 14, rtg: 13, shorePower: 9, reefers: 5 },
-      { sts: 15, tt: 15, rtg: 13, shorePower: 9, reefers: 5 },
-      { sts: 14, tt: 16, rtg: 13, shorePower: 8, reefers: 5 },
-      { sts: 15, tt: 14, rtg: 13, shorePower: 8, reefers: 5 },
-      { sts: 13, tt: 16, rtg: 12, shorePower: 7, reefers: 5 },
-      { sts: 11, tt: 14, rtg: 10, shorePower: 7, reefers: 5 },
-      { sts: 10, tt: 12, rtg: 9, shorePower: 7, reefers: 5 },
-      { sts: 12, tt: 14, rtg: 11, shorePower: 7, reefers: 5 },
-      { sts: 10, tt: 12, rtg: 9, shorePower: 7, reefers: 5 },
-      { sts: 9, tt: 10, rtg: 8, shorePower: 7, reefers: 5 },
-      { sts: 8, tt: 9, rtg: 7, shorePower: 5, reefers: 5 },
-      { sts: 8, tt: 9, rtg: 7, shorePower: 5, reefers: 5 },
-      { sts: 9, tt: 10, rtg: 8, shorePower: 5, reefers: 5 },
-      { sts: 10, tt: 12, rtg: 9, shorePower: 5, reefers: 5 },
+      { sts: 10, sc: 12, asc: 8, shorePower: 5, reefers: 5 },
+      { sts: 9, sc: 10, asc: 7, shorePower: 5, reefers: 5 },
+      { sts: 8, sc: 9, asc: 6, shorePower: 5, reefers: 5 },
+      { sts: 8, sc: 9, asc: 6, shorePower: 5, reefers: 5 },
+      { sts: 9, sc: 10, asc: 7, shorePower: 5, reefers: 5 },
+      { sts: 11, sc: 14, asc: 10, shorePower: 8, reefers: 5 },
+      { sts: 13, sc: 16, asc: 12, shorePower: 8, reefers: 5 },
+      { sts: 12, sc: 15, asc: 11, shorePower: 8, reefers: 5 },
+      { sts: 13, sc: 16, asc: 12, shorePower: 8, reefers: 5 },
+      { sts: 14, sc: 14, asc: 13, shorePower: 8, reefers: 5 },
+      { sts: 15, sc: 14, asc: 13, shorePower: 9, reefers: 5 },
+      { sts: 15, sc: 15, asc: 13, shorePower: 9, reefers: 5 },
+      { sts: 14, sc: 16, asc: 13, shorePower: 8, reefers: 5 },
+      { sts: 15, sc: 14, asc: 13, shorePower: 8, reefers: 5 },
+      { sts: 13, sc: 16, asc: 12, shorePower: 7, reefers: 5 },
+      { sts: 11, sc: 14, asc: 10, shorePower: 7, reefers: 5 },
+      { sts: 10, sc: 12, asc: 9, shorePower: 7, reefers: 5 },
+      { sts: 12, sc: 14, asc: 11, shorePower: 7, reefers: 5 },
+      { sts: 10, sc: 12, asc: 9, shorePower: 7, reefers: 5 },
+      { sts: 9, sc: 10, asc: 8, shorePower: 7, reefers: 5 },
+      { sts: 8, sc: 9, asc: 7, shorePower: 5, reefers: 5 },
+      { sts: 8, sc: 9, asc: 7, shorePower: 5, reefers: 5 },
+      { sts: 9, sc: 10, asc: 8, shorePower: 5, reefers: 5 },
+      { sts: 10, sc: 12, asc: 9, shorePower: 5, reefers: 5 },
     ];
 
     for (let hour = 0; hour < 24; hour++) {
@@ -70,8 +70,8 @@ const LoadProfileChart: React.FC = () => {
         data.push({
           time,
           sts: Math.round(baseData.sts * (1 + (Math.random() - 0.5) * variation)),
-          tt: Math.round(baseData.tt * (1 + (Math.random() - 0.5) * variation)),
-          rtg: Math.round(baseData.rtg * (1 + (Math.random() - 0.5) * variation)),
+          sc: Math.round(baseData.sc * (1 + (Math.random() - 0.5) * variation)),
+          asc: Math.round(baseData.asc * (1 + (Math.random() - 0.5) * variation)),
           shorePower: Math.round(baseData.shorePower * (1 + (Math.random() - 0.5) * variation)),
           reefers: Math.round(baseData.reefers * (1 + (Math.random() - 0.5) * variation)),
         });
@@ -84,21 +84,21 @@ const LoadProfileChart: React.FC = () => {
   const loadData = generateLoadData();
 
   const gridCapacity = 38; // MW
-  const maxLoad = Math.max(...loadData.map(d => d.sts + d.tt + d.rtg + d.shorePower + d.reefers));
+  const maxLoad = Math.max(...loadData.map(d => d.sts + d.sc + d.asc + d.shorePower + d.reefers));
   const yAxisMax = Math.max(gridCapacity * 1.1, maxLoad * 1.2); // Ensure grid capacity line is visible
 
   const equipmentColors = {
     sts: '#DEF4A1',        // light green
-    tt: '#001160',         // dark blue  
-    rtg: '#000850',        // navy blue
+    sc: '#001160',         // dark blue  
+    asc: '#000850',        // navy blue
     shorePower: '#C6F069', // bright green
     reefers: '#EBEBEB',    // grey
   };
 
   const equipmentLabels = {
     sts: 'Ship to Shore Crane (STS)',
-    tt: 'Terminal Tractor (TT)', 
-    rtg: 'Rubber-Tired Gantry (RTG)',
+    sc: 'Straddle Carrier (SC)', 
+    asc: 'Automated Stacking Crane (ASC)',
     shorePower: 'Shore Power',
     reefers: 'Reefer Containers',
   };
@@ -140,7 +140,7 @@ const LoadProfileChart: React.FC = () => {
               top: 20,
               right: 30,
               left: 20,
-              bottom: 60,
+              boscom: 60,
             }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" />
@@ -149,7 +149,7 @@ const LoadProfileChart: React.FC = () => {
               stroke="#666"
               fontSize={11}
               tickLine={true}
-              tickFormatter={formatXAxisTick}
+              tickFormascer={formatXAxisTick}
               interval={0}
               angle={-45}
               textAnchor="end"
@@ -166,7 +166,7 @@ const LoadProfileChart: React.FC = () => {
             />
             <Tooltip content={<CustomTooltip />} />
             <Legend 
-              verticalAlign="bottom" 
+              verticalAlign="boscom" 
               height={36}
               iconType="rect"
             />
@@ -179,7 +179,7 @@ const LoadProfileChart: React.FC = () => {
               strokeDasharray="5 5"
             />
             
-            {/* Stacked areas - order matters for stacking */}
+            {/* Stacked areas - order mascers for stacking */}
             <Area 
               type="monotone" 
               dataKey="sts" 
@@ -190,19 +190,19 @@ const LoadProfileChart: React.FC = () => {
             />
             <Area 
               type="monotone" 
-              dataKey="tt" 
+              dataKey="sc" 
               stackId="1"
-              stroke={equipmentColors.tt} 
-              fill={equipmentColors.tt}
-              name={equipmentLabels.tt}
+              stroke={equipmentColors.sc} 
+              fill={equipmentColors.sc}
+              name={equipmentLabels.sc}
             />
             <Area 
               type="monotone" 
-              dataKey="rtg" 
+              dataKey="asc" 
               stackId="1"
-              stroke={equipmentColors.rtg} 
-              fill={equipmentColors.rtg}
-              name={equipmentLabels.rtg}
+              stroke={equipmentColors.asc} 
+              fill={equipmentColors.asc}
+              name={equipmentLabels.asc}
             />
             <Area 
               type="monotone" 
