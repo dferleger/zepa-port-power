@@ -127,8 +127,12 @@ const LoadProfileChart: React.FC = () => {
   };
 
   const formatXAxisTick = (value: string) => {
-    // Show labels only at the top of each hour
-    return value.endsWith(':00') ? value : '';
+    // Show labels only at the top of each hour, display just the hour number
+    if (value.endsWith(':00')) {
+      const hour = parseInt(value.split(':')[0]);
+      return hour.toString();
+    }
+    return '';
   };
 
   return (
