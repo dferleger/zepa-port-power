@@ -1008,7 +1008,7 @@ export default function ZepaExplorer() {
                    </div>
                    <div className="bg-muted p-4 rounded-lg">
                      <div className="text-sm text-muted-foreground">Peak fluctuation within a day</div>
-                     <div className="text-2xl font-bold text-primary">{stats.peakFluctuation} MW</div>
+                     <div className="text-2xl font-bold text-primary">X MW</div>
                    </div>
                  </div>
               </div>
