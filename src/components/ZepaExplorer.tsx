@@ -140,7 +140,7 @@ export default function ZepaExplorer() {
   const calculateStats = () => {
     const loadData = generateLoadData();
     // Calculate net load considering BESS discharge (subtract discharge from total grid consumption)
-    const totalLoads = loadData.map(d => d.sts + d.sc + d.asc + d.shorePower + d.reefers + d.lights + d.bessCharge - d.bessDischarge);
+    const totalLoads = loadData.map(d => d.sts + d.sc + d.asc + d.shorePower + d.reefers + d.lights + d.bessCharge);
     const peakLoad = Math.max(...totalLoads);
     const minLoad = Math.min(...totalLoads);
     const peakFluctuation = peakLoad - minLoad;
