@@ -223,6 +223,15 @@ const LoadProfileChart: React.FC = () => {
                 flexWrap: 'wrap',
                 gap: '16px'
               }}
+              payload={
+                // Filter out the transparent overlay from legend
+                Object.keys(equipmentLabels).map(key => ({
+                  value: equipmentLabels[key as keyof typeof equipmentLabels],
+                  type: 'rect',
+                  color: equipmentColors[key as keyof typeof equipmentColors],
+                  dataKey: key
+                }))
+              }
             />
             
             {/* Grid capacity reference line - red line to match reference */}
