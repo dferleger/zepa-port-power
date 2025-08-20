@@ -105,6 +105,9 @@ export default function ZepaExplorer() {
       { sc: 2, sts: 4, asc: 3, shorePower: 27, reefers: 4.28, lights: 1.3, bessCharge: 0 },
     ];
 
+    // BESS Discharge hourly values
+    const bessDischargeValues = [0, 1.77, 0, 0, 0, 0, 1.51, 3.5, 1.86, 2.65, 0, 1.83, 3, 0, 0, 0, 0, 0, 0, 4.01, 6.11, 0, 0, 3.58, 3.31];
+
     const data = [];
     
     for (let hour = 0; hour < 24; hour++) {
@@ -125,6 +128,7 @@ export default function ZepaExplorer() {
           reefers: Math.round(hourData.reefers * (1 + (Math.random() - 0.5) * variation) * 100) / 100,
           lights: Math.round(hourData.lights * (1 + (Math.random() - 0.5) * variation) * 100) / 100,
           bessCharge: Math.round(hourData.bessCharge * (1 + (Math.random() - 0.5) * variation) * 100) / 100,
+          bessDischarge: hour < bessDischargeValues.length ? bessDischargeValues[hour] : 0,
         });
       }
     }
@@ -135,7 +139,8 @@ export default function ZepaExplorer() {
   // Calculate statistics from load data
   const calculateStats = () => {
     const loadData = generateLoadData();
-    const totalLoads = loadData.map(d => d.sts + d.sc + d.asc + d.shorePower + d.reefers + d.lights + d.bessCharge);
+    // Calculate net load considering BESS discharge (subtract discharge from total grid consumption)
+    const totalLoads = loadData.map(d => d.sts + d.sc + d.asc + d.shorePower + d.reefers + d.lights + d.bessCharge - d.bessDischarge);
     const peakLoad = Math.max(...totalLoads);
     const minLoad = Math.min(...totalLoads);
     const peakFluctuation = peakLoad - minLoad;

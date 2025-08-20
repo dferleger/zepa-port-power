@@ -20,6 +20,7 @@ interface LoadData {
   reefers: number;
   lights: number;
   bessCharge: number;
+  bessDischarge: number;
 }
 
 interface TooltipData {
@@ -59,6 +60,9 @@ const LoadProfileChart: React.FC = () => {
       { sc: 2, sts: 4, asc: 3, shorePower: 27, reefers: 4.28, lights: 1.3, bessCharge: 0 },
     ];
 
+    // BESS Discharge hourly values provided by user
+    const bessDischargeValues = [0, 1.77, 0, 0, 0, 0, 1.51, 3.5, 1.86, 2.65, 0, 1.83, 3, 0, 0, 0, 0, 0, 0, 4.01, 6.11, 0, 0, 3.58, 3.31];
+
     const data: LoadData[] = [];
     
     for (let hour = 0; hour < 24; hour++) {
@@ -79,6 +83,7 @@ const LoadProfileChart: React.FC = () => {
           reefers: Math.round(hourData.reefers * (1 + (Math.random() - 0.5) * variation) * 100) / 100,
           lights: Math.round(hourData.lights * (1 + (Math.random() - 0.5) * variation) * 100) / 100,
           bessCharge: Math.round(hourData.bessCharge * (1 + (Math.random() - 0.5) * variation) * 100) / 100,
+          bessDischarge: hour < bessDischargeValues.length ? bessDischargeValues[hour] : 0,
         });
       }
     }
@@ -100,6 +105,7 @@ const LoadProfileChart: React.FC = () => {
     reefers: '#EBEBEB',    // grey
     lights: '#FFD700',     // gold
     bessCharge: '#8A2BE2', // blue violet
+    bessDischarge: '#DDA0DD', // plum (lighter purple for overlay)
   };
 
   const equipmentLabels = {
@@ -110,6 +116,7 @@ const LoadProfileChart: React.FC = () => {
     reefers: 'Reefer Containers',
     lights: 'Lighting',
     bessCharge: 'BESS Charge',
+    bessDischarge: 'BESS Discharge',
   };
 
   const CustomTooltip = ({ active, payload, label }: any) => {
@@ -260,6 +267,18 @@ const LoadProfileChart: React.FC = () => {
               fill={equipmentColors.bessCharge}
               strokeWidth={0}
               name={equipmentLabels.bessCharge}
+            />
+            
+            {/* BESS Discharge - Transparent overlay with separate stackId */}
+            <Area 
+              type="monotone" 
+              dataKey="bessDischarge" 
+              stackId="overlay"
+              stroke={equipmentColors.bessDischarge} 
+              fill={equipmentColors.bessDischarge}
+              fillOpacity={0.4}
+              strokeWidth={1}
+              name={equipmentLabels.bessDischarge}
             />
           </AreaChart>
         </ResponsiveContainer>
