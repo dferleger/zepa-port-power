@@ -197,13 +197,14 @@ const LoadProfileChart: React.FC = () => {
               strokeDasharray="5 5"
             />
             
-            {/* Stacked areas - order mascers for stacking */}
+            {/* Stacked areas - order matters for stacking */}
             <Area 
               type="monotone" 
               dataKey="sts" 
               stackId="1"
               stroke={equipmentColors.sts} 
               fill={equipmentColors.sts}
+              strokeWidth={0}
               name={equipmentLabels.sts}
             />
             <Area 
@@ -212,6 +213,7 @@ const LoadProfileChart: React.FC = () => {
               stackId="1"
               stroke={equipmentColors.sc} 
               fill={equipmentColors.sc}
+              strokeWidth={0}
               name={equipmentLabels.sc}
             />
             <Area 
@@ -220,6 +222,7 @@ const LoadProfileChart: React.FC = () => {
               stackId="1"
               stroke={equipmentColors.asc} 
               fill={equipmentColors.asc}
+              strokeWidth={0}
               name={equipmentLabels.asc}
             />
             <Area 
@@ -228,6 +231,7 @@ const LoadProfileChart: React.FC = () => {
               stackId="1"
               stroke={equipmentColors.shorePower} 
               fill={equipmentColors.shorePower}
+              strokeWidth={0}
               name={equipmentLabels.shorePower}
             />
             <Area 
@@ -236,6 +240,7 @@ const LoadProfileChart: React.FC = () => {
               stackId="1"
               stroke={equipmentColors.reefers} 
               fill={equipmentColors.reefers}
+              strokeWidth={0}
               name={equipmentLabels.reefers}
             />
             <Area 
@@ -244,6 +249,7 @@ const LoadProfileChart: React.FC = () => {
               stackId="1"
               stroke={equipmentColors.lights} 
               fill={equipmentColors.lights}
+              strokeWidth={0}
               name={equipmentLabels.lights}
             />
             <Area 
@@ -252,6 +258,7 @@ const LoadProfileChart: React.FC = () => {
               stackId="1"
               stroke={equipmentColors.bessCharge} 
               fill={equipmentColors.bessCharge}
+              strokeWidth={0}
               name={equipmentLabels.bessCharge}
             />
           </AreaChart>
